@@ -1,0 +1,48 @@
+<div class="container">
+  @for (player of players; track player.id) {
+    <div class="player-card">
+
+      <!-- Avatar -->
+      <div class="avatar">
+        <img [src]="player.image" alt="player">
+      </div>
+
+      <!-- Player Info -->
+      <div class="player-info">
+
+        <h3 class="name">{{ player.name }}</h3>
+
+        <!-- Position + Age -->
+        <div class="player-top">
+          <p class="position">
+            Position <span>{{ player.position }}</span>
+          </p>
+
+          <span class="age">
+            Age {{ player.age }}
+          </span>
+        </div>
+
+        <!-- Meta -->
+        <div class="meta">
+          <span>National Team: <strong>{{ player.nationalteam }}</strong></span>
+          <span>Club: <strong>{{ player.club }}</strong></span>
+        </div>
+
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button class="view">
+          <mat-icon>visibility</mat-icon>
+          View profile
+        </button>
+
+        <button class="add">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+    </div>
+  }
+</div>

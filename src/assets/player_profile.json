@@ -1,0 +1,589 @@
+[
+  {
+    "id": 1,
+    "name": "Alisson Becker",
+    "position": "GK",
+    "image": "https://fbref.com/req/202302030/images/headshots/7a2e46a8_2022.jpg",
+    "age": 31,
+    "nationality": "Brazilian",
+    "club": "Liverpool",
+    "league": "Premier League",
+    "stats": {
+      "PlayingTime":{
+        "Matchesplayed":123,
+        "Gamesstarted":23,
+        "Minutesplayed":54,
+        "90s":89
+      },
+     "Attacking":{
+       "GoalsScored":123,
+       "AssistsProvided":232,
+       "Goals+Assists":454,
+       "Expectedgoals":455,
+       "Expectedassists":495,
+       "npxG":55,
+       "G-PK":33
+     },
+     "Defensive":{
+      "Totaltackles":44,
+      "Tackleswon":43,
+      "Blocksmade":66,
+      "Interceptions":44,
+      "Tkl+Int":47,
+      "Clearances":42,
+      "Err":87
+     },
+     "Goalkeeping":{
+      "GoalsConceded":88,
+      "Savesmade":32,
+      "Savepercentage":22,
+      "Cleansheets":43,
+      "Cleansheetpercentage":12,
+      "Penaltiesfaced":90,
+      "Penaltysaves":21
+     },
+     "Possession":{
+      "Touches":555,
+      "Carries":345,
+      "Progressiveruns":665,
+      "Miscontrols":321,
+      "Dis":432
+     },
+     "Miscellaneous":{
+      "Yellowcards":97,
+      "Redcards":123,
+      "Penaltieswon":55,
+      "Penaltiesconceded":124,
+      "Ballrecoveries":57
+     },
+     "Passing":{
+      "ProgressivePasses":54,
+      "Progressivecarries":90,
+      "Keypasses":67,
+      "PPA":98
+     }
+    }
+  },
+  {
+    "id": 2,
+    "name": "Trent Alexander-Arnold",
+    "position": "RB",
+    "image": "https://fbref.com/req/202302030/images/headshots/cd1acf9d_2022.jpg",
+    "age": 25,
+    "nationality": "English",
+    "club": "Liverpool",
+    "league": "Premier League",
+    "stats": {
+      "PlayingTime":{
+        "Matchesplayed":123,
+        "Gamesstarted":23,
+        "Minutesplayed":54,
+        "90s":89
+      },
+     "Attacking":{
+       "GoalsScored":123,
+       "AssistsProvided":232,
+       "Goals+Assists":454,
+       "Expected goals":455,
+       "Expectedassists":425,
+       "npxG":55,
+       "G-PK":33
+     },
+     "Defensive":{
+      "Totaltackles":44,
+      "Tackleswon":43,
+      "Blocksmade":66,
+      "Interceptions":44,
+      "Tkl+Int":47,
+      "Clearances":42,
+      "Err":87
+     },
+     "Goalkeeping":{
+      "GoalsConceded":88,
+      "Savesmade":32,
+      "Savepercentage":22,
+      "Cleansheets":43,
+      "Cleansheetpercentage":12,
+      "Penaltiesfaced":90,
+      "Penaltysaves":21
+     },
+     "Possession":{
+      "Touches":555,
+      "Carries":345,
+      "Progressiveruns":665,
+      "Miscontrols":321,
+      "Dis":432
+     },
+     "Miscellaneous":{
+      "Yellow cards":97,
+      " Red cards":123,
+      "Penalties won":55,
+      "Penalties conceded":124,
+      "Ball recoveries":57
+     },
+     "Passing":{
+      "ProgressivePasses":54,
+      "Progressivecarries":90,
+      "Keypasses":67,
+      "PPA":98
+     }
+    }
+  },
+  {
+    "id": 3,
+    "name": "Virgil van Dijk",
+    "position": "CB",
+    "image": "https://fbref.com/req/202302030/images/headshots/e06683ca_2022.jpg",
+    "age": 32,
+    "nationality": "Dutch",
+    "club": "Liverpool",
+    "league": "Premier League",
+    "stats": {
+      "PlayingTime":{
+        "Matchesplayed":123,
+        "Gamesstarted":23,
+        "Minutesplayed":54,
+        "90s":89
+      },
+     "Attacking":{
+       "GoalsScored":123,
+       "AssistsProvided":232,
+       "Goals+Assists":454,
+       "Expected goals":455,
+       "Expectedassists":495,
+       "npxG":55,
+       "G-PK":33
+     },
+     "Defensive":{
+      "Totaltackles":44,
+      "Tackleswon":43,
+      "Blocksmade":66,
+      "Interceptions":44,
+      "Tkl+Int":47,
+      "Clearances":42,
+      "Err":87
+     },
+     "Goalkeeping":{
+      "GoalsConceded":88,
+      "Savesmade":32,
+      "Savepercentage":22,
+      "Cleansheets":43,
+      "Cleansheetpercentage":12,
+      "Penaltiesfaced":90,
+      "Penaltysaves":21
+     },
+     "Possession":{
+      "Touches":555,
+      "Carries":345,
+      "Progressiveruns":665,
+      "Miscontrols":321,
+      "Dis":432
+     },
+     "Miscellaneous":{
+      "Yellow cards":97,
+      " Red cards":123,
+      "Penalties won":55,
+      "Penalties conceded":124,
+      "Ball recoveries":57
+     },
+     "Passing":{
+      "ProgressivePasses":54,
+      "Progressivecarries":90,
+      "Keypasses":67,
+      "PPA":98
+     }
+    }
+  },
+  {
+    "id": 4,
+    "name": "Joel Matip",
+    "position": "CB",
+    "image": "https://fbref.com/req/202302030/images/headshots/b217ef29_2022.jpg",
+    "age": 31,
+    "nationality": "Cameroonian",
+    "club": "Liverpool",
+    "league": "Premier League",
+    "stats": {
+      "PlayingTime":{
+        "Matchesplayed":123,
+        "Gamesstarted":23,
+        "Minutesplayed":54,
+        "90s":89
+      },
+     "Attacking":{
+       "GoalsScored":123,
+       "AssistsProvided":232,
+       "Goals+Assists":454,
+       "Expected goals":455,
+       "Expectedassists":495,
+       "npxG":55,
+       "G-PK":33
+     },
+     "Defensive":{
+      "Totaltackles":44,
+      "Tackleswon":43,
+      "Blocksmade":66,
+      "Interceptions":44,
+      "Tkl+Int":47,
+      "Clearances":42,
+      "Err":87
+     },
+     "Goalkeeping":{
+      "GoalsConceded":88,
+      "Savesmade":32,
+      "Savepercentage":22,
+      "Cleansheets":43,
+      "Cleansheetpercentage":12,
+      "Penaltiesfaced":90,
+      "Penaltysaves":21
+     },
+     "Possession":{
+      "Touches":555,
+      "Carries":345,
+      "Progressiveruns":665,
+      "Miscontrols":321,
+      "Dis":432
+     },
+     "Miscellaneous":{
+      "Yellow cards":97,
+      " Red cards":123,
+      "Penalties won":55,
+      "Penalties conceded":124,
+      "Ball recoveries":57
+     },
+     "Passing":{
+      "ProgressivePasses":54,
+      "Progressivecarries":90,
+      "Keypasses":67,
+      "PPA":98
+     }
+    }
+  },
+  {
+    "id": 5,
+    "name": "Andrew Robertson",
+    "position": "LB",
+    "image": "https://fbref.com/req/202302030/images/headshots/2e4f5f03_2022.jpg",
+    "age": 27,
+    "nationality": "Scottish",
+    "club": "Liverpool",
+    "league": "Premier League",
+    "stats": {
+     "PlayingTime":{
+        "Matchesplayed":123,
+        "Gamesstarted":23,
+        "Minutesplayed":54,
+        "90s":89
+      },
+     "Attacking":{
+       "GoalsScored":123,
+       "AssistsProvided":232,
+       "Goals+Assists":454,
+       "Expected goals":455,
+       "Expectedassists":495,
+       "npxG":55,
+       "G-PK":33
+     },
+     "Defensive":{
+      "Totaltackles":44,
+      "Tackleswon":43,
+      "Blocksmade":66,
+      "Interceptions":44,
+      "Tkl+Int":47,
+      "Clearances":42,
+      "Err":87
+     },
+     "Goalkeeping":{
+      "GoalsConceded":88,
+      "Savesmade":32,
+      "Savepercentage":22,
+      "Cleansheets":43,
+      "Cleansheetpercentage":12,
+      "Penaltiesfaced":90,
+      "Penaltysaves":21
+     },
+     "Possession":{
+      "Touches":555,
+      "Carries":345,
+      "Progressiveruns":665,
+      "Miscontrols":321,
+      "Dis":432
+     },
+     "Miscellaneous":{
+      "Yellow cards":97,
+      " Red cards":123,
+      "Penalties won":55,
+      "Penalties conceded":124,
+      "Ball recoveries":57
+     },
+     "Passing":{
+      "ProgressivePasses":54,
+      "Progressivecarries":90,
+      "Keypasses":67,
+      "PPA":98
+     }
+    }
+  },
+  {
+    "id": 6,
+    "name": "Ibrahima Konaté",
+    "position": "CB",
+    "image": "https://fbref.com/req/202302030/images/headshots/5ed9b537_2022.jpg",
+    "age": 29,
+    "nationality": "French",
+    "club": "Liverpool",
+    "league": "Premier League",
+    "stats": {
+      "PlayingTime":{
+        "Matchesplayed":123,
+
+        "Gamesstarted":23,
+        "Minutesplayed":54,
+        "90s":89
+      },
+     "Attacking":{
+       "GoalsScored":123,
+       "AssistsProvided":232,
+       "Goals+Assists":454,
+       "Expected goals":455,
+       "Expectedassists":495,
+       "npxG":55,
+       "G-PK":33
+     },
+     "Defensive":{
+      "Totaltackles":44,
+      "Tackleswon":43,
+      "Blocksmade":66,
+      "Interceptions":44,
+      "Tkl+Int":47,
+      "Clearances":42,
+      "Err":87
+     },
+     "Goalkeeping":{
+      "GoalsConceded":88,
+      "Savesmade":32,
+      "Savepercentage":22,
+      "Cleansheets":43,
+      "Cleansheetpercentage":12,
+      "Penaltiesfaced":90,
+      "Penaltysaves":21
+     },
+     "Possession":{
+      "Touches":555,
+      "Carries":345,
+      "Progressiveruns":665,
+      "Miscontrols":321,
+      "Dis":432
+     },
+     "Miscellaneous":{
+      "Yellow cards":97,
+      " Red cards":123,
+      "Penalties won":55,
+      "Penalties conceded":124,
+      "Ball recoveries":57
+     },
+     "Passing":{
+      "ProgressivePasses":54,
+      "Progressivecarries":90,
+      "Keypasses":67,
+      "PPA":98
+     }
+
+    }
+  },
+  {
+    "id": 7,
+    "name": "Alexis Mac Allister",
+    "position": "CM",
+    "image": "https://fbref.com/req/202302030/images/headshots/83d074ff_2022.jpg",
+    "age": 33,
+    "nationality": "Argentinian",
+    "club": "Liverpool",
+    "league": "Premier League",
+    "stats": {
+     "PlayingTime":{
+        "Matchesplayed":123,
+        "Gamesstarted":23,
+        "Minutesplayed":54,
+        "90s":89
+      },
+     "Attacking":{
+       "GoalsScored":123,
+       "AssistsProvided":232,
+       "Goals+Assists":454,
+       "Expected goals":455,
+       "Expectedassists":495,
+       "npxG":55,
+       "G-PK":33
+     },
+     "Defensive":{
+      "Totaltackles":44,
+      "Tackleswon":43,
+      "Blocksmade":66,
+      "Interceptions":44,
+      "Tkl+Int":47,
+      "Clearances":42,
+      "Err":87
+     },
+     "Goalkeeping":{
+      "GoalsConceded":88,
+      "Savesmade":32,
+      "Savepercentage":22,
+      "Cleansheets":43,
+      "Cleansheetpercentage":12,
+      "Penaltiesfaced":90,
+      "Penaltysaves":21
+     },
+     "Possession":{
+      "Touches":555,
+      "Carries":345,
+      "Progressiveruns":665,
+      "Miscontrols":321,
+      "Dis":432
+     },
+     "Miscellaneous":{
+      "Yellow cards":97,
+      " Red cards":123,
+      "Penalties won":55,
+      "Penalties conceded":124,
+      "Ball recoveries":57
+     },
+     "Passing":{
+      "ProgressivePasses":54,
+      "Progressivecarries":90,
+      "Keypasses":67,
+      "PPA":98
+     }
+    }
+  },
+  {
+    "id": 8,
+    "name": "Thiago Alcantara",
+    "position": "CM",
+    "image": "https://fbref.com/req/202302030/images/headshots/77e84962_2022.jpg",
+    "age": 32,
+    "nationality": "Spanish",
+    "club": "Liverpool",
+    "league": "Premier League",
+    "stats": {
+      "PlayingTime":{
+        "Matchesplayed":123,
+        "Gamesstarted":23,
+        "Minutesplayed":54,
+        "90s":89
+      },
+     "Attacking":{
+       "GoalsScored":123,
+       "AssistsProvided":232,
+       "Goals+Assists":454,
+       "Expected goals":455,
+       "Expectedassists":495,
+       "npxG":55,
+       "G-PK":33
+     },
+     "Defensive":{
+      "Totaltackles":44,
+      "Tackleswon":43,
+      "Blocksmade":66,
+      "Interceptions":44,
+      "Tkl+Int":47,
+      "Clearances":42,
+      "Err":87
+     },
+     "Goalkeeping":{
+      "GoalsConceded":88,
+      "Savesmade":32,
+      "Savepercentage":22,
+      "Cleansheets":43,
+      "Cleansheetpercentage":12,
+      "Penaltiesfaced":90,
+      "Penaltysaves":21
+     },
+     "Possession":{
+      "Touches":555,
+      "Carries":345,
+      "Progressiveruns":665,
+      "Miscontrols":321,
+      "Dis":432
+     },
+     "Miscellaneous":{
+      "Yellow cards":97,
+      " Red cards":123,
+      "Penalties won":55,
+      "Penalties conceded":124,
+      "Ball recoveries":57
+     },
+     "Passing":{
+      "ProgressivePasses":54,
+      "Progressivecarries":90,
+      "Keypasses":67,
+      "PPA":98
+     }
+    }
+  },
+  {
+    "id": 9,
+    "name": "Mohamed Salah",
+    "position": "RW",
+    "image": "assets/p1.png",
+    "age": 31,
+    "nationality": "Egyptian",
+    "club": "Liverpool",
+    "league": "Premier League",
+    "stats": {
+     "PlayingTime":{
+        "Matchesplayed":123,
+        "Gamesstarted":23,
+        "Minutesplayed":54,
+        "90s":89
+      },
+     "Attacking":{
+       "GoalsScored":123,
+       "AssistsProvided":232,
+       "Goals+Assists":454,
+       "Expected goals":455,
+       "Expectedassists":495,
+       "npxG":55,
+       "G-PK":33
+     },
+     "Defensive":{
+      "Totaltackles":44,
+      "Tackleswon":43,
+      "Blocksmade":66,
+      "Interceptions":44,
+      "Tkl+Int":47,
+      "Clearances":42,
+      "Err":87
+     },
+     "Goalkeeping":{
+      "GoalsConceded":88,
+      "Savesmade":32,
+      "Savepercentage":22,
+      "Cleansheets":43,
+      "Cleansheetpercentage":12,
+      "Penaltiesfaced":90,
+      "Penaltysaves":21
+     },
+     "Possession":{
+      "Touches":555,
+      "Carries":345,
+      "Progressiveruns":665,
+      "Miscontrols":321,
+      "Dis":432
+     },
+     "Miscellaneous":{
+      "Yellow cards":97,
+      " Red cards":123,
+      "Penalties won":55,
+      "Penalties conceded":124,
+      "Ball recoveries":57
+     },
+     "Passing":{
+      "ProgressivePasses":54,
+      "Progressivecarries":90,
+      "Keypasses":67,
+      "PPA":98
+     }
+    }
+  }
+]

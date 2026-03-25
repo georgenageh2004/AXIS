@@ -1,0 +1,137 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;    
+  height: 100vh;
+
+  background-image: url('/assets/background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
+.container {
+  
+  width: 420px;
+ 
+  margin: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  
+  background-color: #292828;
+  border: 3px solid #6eff6e;
+  border-radius: 20px;
+  text-align: center;
+}
+input{
+    background-color:rgba(0, 0, 0, 0.6) ;
+}
+/* ===== Logo Section ===== */
+.top img {
+  width: 180px;
+  margin-bottom: 3px;
+}
+
+.top h2 {
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 13px;
+}
+
+/* ===== Input Boxes ===== */
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.user_name,
+.pass {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border: 2px solid #6eff6e;
+  border-radius: 30px;
+  transition: 0.3s ease;
+}
+
+/* Icon */
+.user_name mat-icon,
+.pass mat-icon {
+  color: #6eff6e;
+  font-size: 22px;
+  margin-right: 10px;
+}
+
+/* Input Field */
+.inputs input {
+  flex: 1;
+   background-color:rgba(0, 0, 0, 0.6) ;
+  padding: 8px;
+  border: none;
+  background: transparent;
+  outline: none;
+  color: white;
+  font-size: 15px;
+}
+
+/* ===== ERROR STATE (Reactive Forms) ===== */
+
+.user_name.invalid,
+.pass.invalid {
+  border-color: #ff3b3b !important;
+}
+
+.user_name.invalid mat-icon,
+.pass.invalid mat-icon {
+  color: #ff3b3b !important;
+}
+
+/* ===== Error Message Text ===== */
+.input_error {
+  color: #ff3b3b;
+  font-size: 13px;
+ margin-left: 8px;
+ margin-bottom: 0px;
+  text-align: left;
+}
+
+/* ===== Buttons ===== */
+.btns {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.login,
+.signup {
+  padding: 15px 33px;
+  border-radius: 25px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.5s;
+  margin-bottom: 4px;
+}
+
+
+.signup {
+  background: #fff;
+}
+
+.login:hover,
+.signup:hover {
+  transform: scale(1.07);
+}
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px rgba(255,255,255,0) inset !important;
+  -webkit-text-fill-color: #fff !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #fff !important;
+}

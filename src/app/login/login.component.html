@@ -1,0 +1,32 @@
+<form [formGroup]="form" >
+<div class="container">
+<div class="top">
+ <img src="assets/Project logo.png"alt="AXIS Logo" />
+ <h2>'Welcome to the future of football'</h2>
+</div>
+<div class="inputs">
+    <div class="user_name" [class.invalid]="EmailInvalid">
+        <mat-icon>mail</mat-icon>
+        
+        <input type="email" id="email" placeholder="email" [formControl]="form.controls.email">
+    </div>
+    @if (EmailInvalid) {
+<p class="input_error">please enter a valid email address </p>
+}
+    <div class="pass"[class.invalid]="PassInvalid">
+        <mat-icon>lock</mat-icon>
+        
+        <input type="password" id="password" placeholder="password" formControlName="password">
+    </div>
+    @if (PassInvalid) {
+<p class="input_error">please enter a valid password </p>
+}
+
+</div>
+<div class="btns">
+  <button class="login" (click)="onSubmit()">Log in</button>
+  <button class="signup" (click)="signup()">Sign up</button>
+</div>
+</div>
+</form>
+

@@ -1,0 +1,58 @@
+<!-- <div *ngIf="player" class="player-details-card">
+    <p>Player Details</p>
+     <div class="player-header">
+      <h2>{{ player.name}}</h2>
+      <img [src]="player.image" alt="{{ player.name }}" width="150">
+      </div>
+       <ul class="player-stats">
+        <li><strong>Age:</strong> {{ player.age }}</li>
+        <li><strong>Position:</strong> {{ player.position }}</li>
+        <li><strong>Fitness:</strong> {{ player.fitness }}</li>
+         <li><strong>Matches Played:</strong> {{ player.matchesPlayed }}</li>
+        
+        <li><strong>Assists:</strong> {{ player.assists }}</li>
+        <li><strong>Pass Accuracy:</strong> {{ player.passAccuracy }}</li>
+        <li><strong>Tackles:</strong> {{ player.tackles }}</li>
+       
+        
+      </ul>
+    </div> -->
+<div *ngIf="player" class="player-details-card">
+    <p class="card-title">Player details</p>
+
+    <div class="player-header">
+        <img [src]="player.image" alt="{{ player.name }}">
+        <div class="header-info">
+            <h2>{{ player.name }}</h2>
+            <p class="age-pos">Age: {{ player.age }} | {{ player.position }}</p>
+            <!-- <img [src]="player.flagImage" alt="Flag" class="flag-icon">  -->
+        </div>
+    </div>
+
+    <div class="fitness-section">
+        <p class="fitness-label">Fitness</p>
+        <div class="fitness-bar-container">
+            <div class="fitness-bar" [style.width]="player.fitness"></div>
+            <span class="fitness-value">{{ player.fitness }}</span>
+        </div>
+    </div>
+
+    <div class="stats-section">
+        <div class="stat-item">
+            <span class="stat-label">Matches played</span>
+            <span class="stat-value">{{ player.matchesPlayed }}</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">Assists</span>
+            <span class="stat-value">{{ player.assists }}</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">Pass Accuracy</span>
+            <span class="stat-value pass-accuracy-value">{{ player.passAccuracy }}</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">Tackles</span>
+            <span class="stat-value">{{ player.tackles }}</span>
+        </div>
+    </div>
+</div>

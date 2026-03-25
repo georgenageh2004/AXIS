@@ -1,0 +1,8 @@
+.layout{
+    display: flex;
+  gap: 20px;
+}
+.page-content {
+  margin-left: 220px;
+  /* width: calc(100% - 170px); */
+}

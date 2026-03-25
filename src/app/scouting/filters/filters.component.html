@@ -1,0 +1,219 @@
+<form [formGroup]="filtersForm" class="filters-container">
+ 
+  <!-- Position -->
+   <h6 class="head">Filters</h6>
+   <div class="search">
+  <mat-icon class="search-icon">search</mat-icon>
+  <input 
+    type="text"
+    placeholder="Search by name"
+  />
+</div>
+  <div class="filter-row">
+    <label class="filter-label">Basic Information </label>
+    <select formControlName="position">
+      <option value="">Select Position</option>
+      <option value="attacker">Attacker</option>
+      <option value="midfielder">Midfielder</option>
+      <option value="defender">Defender</option>
+      <option value="goalkeeper">Goalkeeper</option>
+    </select>
+  </div>
+
+  <select formControlName="league">
+      <option value="">Select league</option>
+      @for (league of leagues; track league.id) {
+        <option [value]="league.name">{{league.name}}</option>
+      }
+      
+     
+      
+    </select>
+    <select formControlName="nationality">
+      <option value="">Select nationality</option>
+      @for (nationality of nationality; track nationality.id) {
+        <option [value]="nationality.name">{{nationality.name}}</option>
+      }
+      
+     
+      
+    </select>
+    <select formControlName="clubs">
+      <option value="">Select club </option>
+      @for (club of filteredClubs; track club.id) {
+        <option [value]="club.name">{{club.name}}</option>
+      }
+      
+     
+      
+    </select>
+    <div class="filter-row">
+    <label class="filter-label">Age</label>
+
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="ageMin" placeholder="Min">
+      <input class="max" type="number" formControlName="ageMax" placeholder="Max">
+    </div>
+  </div>
+
+       <label class="attack_section">Attacking statues : </label>
+  <!--  Goals scored -->
+  <div class="filter-row">
+    <label class="filter-label"> Goals Scored </label>
+
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="GoalsScoredMin" placeholder="Min">
+      <input class="max" type="number" formControlName="GoalsScoredMax" placeholder="Max">
+    </div>
+  </div>
+
+  <!-- assist -->
+  <div class="filter-row">
+    <label class="filter-label"> Assits Provided</label>
+
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="AssitsProvidedMin" placeholder="Min">
+      <input  class="max" type="number" formControlName="AssitsProvidedMax" placeholder="Max">
+    </div>
+  </div>
+
+  <!-- ExpectedGoals-->
+  <div class="filter-row">
+    <label class="filter-label">Expected Goals (XG)</label>
+
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="ExpectedGoalsMin" placeholder="Min">
+      <input class="max" type="number" formControlName="ExpectedGoalsMax" placeholder="Max">
+    </div>
+  </div>
+
+  <!-- ExpectedAssistes -->
+  <div class="filter-row">
+    <label class="filter-label"> Expected Assistes (XAG)</label>
+
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="ExpectedAssistesMin" placeholder="Min">
+      <input class="max" type="number" formControlName="ExpectedAssistesMax" placeholder="Max">
+    </div>
+  </div>
+<!-- Defensive Stats -->
+<label class="attack_section">Defensive Stats : </label>
+  <div class="filter-row">
+    <label class="filter-label"> Total Tackels </label>
+
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="TotalTackelsMin" placeholder="Min">
+      <input class="max" type="number" formControlName="TotalTackelsMax" placeholder="Max">
+    </div>
+  </div>
+  <div class="filter-row">
+    <label class="filter-label"> Blocks Made</label>
+
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="BlocksMadeMin" placeholder="Min">
+      <input class="max" type="number" formControlName="BlocksMadeMax" placeholder="Max">
+    </div>
+  </div>
+  <div class="filter-row">
+    <label class="filter-label"> Interceptions</label>
+
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="InterceptionsMin" placeholder="Min">
+      <input class="max" type="number" formControlName="InterceptionsMax" placeholder="Max">
+    </div>
+  </div>
+  <div class="filter-row">
+    <label class="filter-label"> Clearances</label>
+
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="ClearancesMin" placeholder="Min">
+      <input class="max" type="number" formControlName="ClearancesMax" placeholder="Max">
+    </div>
+  </div>
+
+  <!-- Passing &Creativity Stats -->
+<label class="attack_section">Passing &Creativity Stats : </label>
+  <div class="filter-row">
+    <label class="filter-label"> Progressive passes </label>
+
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="ProgressivepassesMin" placeholder="Min">
+      <input class="max" type="number" formControlName="ProgressivepassesMax" placeholder="Max">
+    </div>
+  </div>
+  <div class="filter-row">
+    <label class="filter-label"> Key Passes </label>
+
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="KeyPassesMin" placeholder="Min">
+      <input class="max" type="number" formControlName="KeyPassesMax" placeholder="Max">
+    </div>
+  </div>
+  <div class="filter-row">
+    <label class="filter-label"> Passes Into the Penalty Area </label>
+
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="PassesIntothePenaltyAreaMin" placeholder="Min">
+      <input class="max" type="number" formControlName="PassesIntothePenaltyAreaMax" placeholder="Max">
+    </div>
+  </div>
+
+
+   <!-- Goalkeeping stats -->
+<label class="attack_section">Goalkeeping stats : </label>
+  <div class="filter-row">
+    <label class="filter-label"> Saves Made </label>
+
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="SavesMadeMin" placeholder="Min">
+      <input class="max" type="number" formControlName="SavesMadeMax" placeholder="Max">
+    </div>
+  </div>
+  <div class="filter-row">
+    <label class="filter-label"> Clean Sheets</label>
+
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="CleanSheatesMin" placeholder="Min">
+      <input class="max" type="number" formControlName="CleanSheatesMax" placeholder="Max">
+    </div>
+  </div>
+  <div class="filter-row">
+    <label class="filter-label"> Penalty Saved </label>
+
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="penaltySavedMin" placeholder="Min">
+      <input class="max" type="number" formControlName="penaltySavedMax" placeholder="Max">
+    </div>
+  </div>
+
+<!--Possession  & Ball Control -->
+<label class="attack_section">Possession & Ball Control : </label>
+  <div class="filter-row">
+    <label class="filter-label"> Touches </label>
+
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="TouchesMin" placeholder="Min">
+      <input class="max" type="number" formControlName="TouchesMax" placeholder="Max">
+    </div>
+  </div>
+  <div class="filter-row">
+    <label class="filter-label"> Carries </label>
+
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="CarriesMin" placeholder="Min">
+      <input class="max" type="number" formControlName="CarriesMax" placeholder="Max">
+    </div>
+  </div>
+
+
+
+  <!-- Button -->
+  <div class="filter-submit">
+    @if(Possinvalid){
+      <button class="submit"  [disabled]="filtersForm.invalid"      type="button" (click)="applyFilters()">Apply Filters</button>
+      <h5>*plese select a position</h5>
+    }@else {<button type="button" (click)="applyFilters()">Apply Filters</button>}
+    
+  </div>
+
+</form>

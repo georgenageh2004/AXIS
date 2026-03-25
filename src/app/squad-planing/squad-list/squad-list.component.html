@@ -1,0 +1,33 @@
+
+<div class="squad-table-card">
+    <p class="squad-list-title">SQUAD LIST</p>
+    
+    <div class="squad-scroll-container">
+        <table class="squad-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Age</th>
+                    <th>Pass Accuracy</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let player of players">
+                    <td>{{ player.name }}</td>
+                    <td>{{ player.position }}</td>
+                    <td>{{ player.age }}</td>
+                    <td>{{ player.passAccuracy }}%</td>
+                    <td [class.injured]="player.isInjured" [class.active]="!player.isInjured">
+                        {{ player.isInjured ? 'Injured' : 'Active' }}
+                    </td>
+                     <td>
+                     <button (click)="selectReplacement(player)">Select</button>
+                      </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+</div>

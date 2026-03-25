@@ -1,0 +1,52 @@
+[
+  { "id": 1,
+   "name": "Real Madrid", 
+   "leagueName": "La Liga"
+   },
+   
+  { "id": 2, 
+  "name": "FC Barcelona", 
+  "leagueName": "La Liga"
+ },
+
+  { "id": 3,
+   "name": "Manchester United",
+    "leagueName": "English Premier League"
+   },
+  { "id": 4,
+   "name": "Liverpool",
+    "leagueName": "English Premier League"
+   },
+  { "id": 5, 
+  "name": "Chelsea",
+   "leagueName": "English Premier League" 
+  },
+
+  { "id": 6, "name": "Bayern Munich", "leagueName": "Bundesliga" },
+  { "id": 7, "name": "Borussia Dortmund", "leagueName": "Bundesliga" },
+
+  { "id": 8, "name": "Juventus", "leagueName": "Serie A" },
+  { "id": 9, "name": "AC Milan", "leagueName": "Serie A" },
+  { "id": 10, "name": "Inter Milan", "leagueName": "Serie A" },
+
+  { "id": 11, "name": "Paris Saint-Germain", "leagueName": "Ligue 1" },
+  { "id": 12, "name": "Lyon", "leagueName": "Ligue 1" },
+
+  { "id": 13, "name": "Ajax", "leagueName": "Eredivisie" },
+  { "id": 14, "name": "PSV Eindhoven", "leagueName": "Eredivisie" },
+
+  { "id": 15, "name": "Benfica", "leagueName": "Primeira Liga" },
+  { "id": 16, "name": "Porto", "leagueName": "Primeira Liga" },
+  { "id": 17, "name": "Sporting CP", "leagueName": "Primeira Liga" },
+
+  { "id": 18, "name": "River Plate", "leagueName": "Argentine Primera División" },
+  { "id": 19, "name": "Boca Juniors", "leagueName": "Argentine Primera División" },
+
+  { "id": 20, "name": "Santos", "leagueName": "Campeonato Brasileiro Série A" },
+  { "id": 21, "name": "Flamengo", "leagueName": "Campeonato Brasileiro Série A" },
+  { "id": 22, "name": "Palmeiras", "leagueName": "Campeonato Brasileiro Série A" },
+  { "id": 23, "name": "Corinthians", "leagueName": "Campeonato Brasileiro Série A" },
+
+  { "id": 24, "name": "Celtic", "leagueName": "Scottish Premiership" },
+  { "id": 25, "name": "Rangers", "leagueName": "Scottish Premiership" }
+]

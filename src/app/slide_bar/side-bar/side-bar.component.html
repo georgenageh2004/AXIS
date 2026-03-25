@@ -1,0 +1,40 @@
+<div class="sidebar">
+    
+    <div class="logo">
+      <img src="assets/Project logo.png"alt="AXIS Logo" />
+      
+    </div>
+
+    <nav>
+      <ul>
+        <li routerLink="/dashboard" routerLinkActive="active">
+            <mat-icon class="icon">trending_up</mat-icon>
+        
+          Dashboard
+        </li>
+
+        <li routerLink="/squad-planning" routerLinkActive="active"
+        >
+          <mat-icon class="icon">crop_rotate</mat-icon>
+          Squad planning
+        </li>
+         <li routerLink="/questions" routerLinkActive="active"
+        >
+          <mat-icon class="icon">dynamic_form</mat-icon>
+        questions
+        </li>
+        <li routerLink="/" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}">
+         <mat-icon class="icon">search</mat-icon>
+          Scouting
+        </li>
+
+        <li routerLink="/repots" routerLinkActive="active">
+          <mat-icon class="icon">assignment</mat-icon>
+          Reports
+        </li>
+      </ul>
+    </nav>
+
+</div>
+

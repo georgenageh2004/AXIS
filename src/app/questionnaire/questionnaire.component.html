@@ -1,0 +1,129 @@
+
+<div class="container">
+  <div class="head">
+<img class="logo" src="assets/Project logo.png"alt="AXIS Logo">
+<div class="text">
+ <h2 >Football Manager — Tactical & Transfer Survey</h2>
+ <h5 class="select_perfect">Select your preferred options.</h5>
+ </div>
+</div>
+
+
+<form [formGroup]="form" (ngSubmit)="submitAnswers()">
+
+<!-- your team -->
+  <section>
+    <h4 class="question">1- Preferred Team</h4>
+
+    <div class="custom-select">
+
+      <div class="select-head" (click)="toggleDropdown()">
+        {{ form.get('league')?.value || 'Select your club' }}
+      </div>
+
+      <div class="select-options" *ngIf="isOpen">
+        @for (league of leagues; track league.id) {
+          <div 
+            class="select-option"
+            (click)="selectLeague(league.name)">
+            {{league.name}}
+          </div>
+        }
+      </div>
+
+    </div>
+    </section>
+
+
+  <!-- Preferred Formation -->
+  <section>
+    <h4 class="question">1- Preferred Formation</h4>
+ 
+  <div class="question-block">
+   
+    <div class="options">
+
+      <label class="card"> 
+        <img src="assets/4-3-3.png">
+        <h4>4-3-3</h4>
+        <input type="radio" formControlName="preferredFormation" value="4-3-3">
+      </label>
+
+      <label class="card">
+        <img src="assets/3-4-3.png">
+        <h4>3-4-3</h4>
+        <input type="radio" formControlName="preferredFormation" value="3-4-3"> 
+
+      </label>
+
+      <label class="card">
+         <img src="assets/4-4-2.png">
+        <h4> 4-4-2</h4>
+        <input type="radio" formControlName="preferredFormation" value="4-4-2">
+     
+      </label>
+      
+      <label class="card">
+         <img src="assets/5-4-1.png">
+        <h4>5-4-1</h4>
+        <input type="radio" formControlName="preferredFormation" value="5-4-1"> 
+      
+      </label>
+    </div>
+    <div class="error" *ngIf="form.get('preferredFormation')?.touched && form.get('preferredFormation')?.invalid">
+      Please select a formation
+    </div>
+  </div>
+ </section>
+
+
+
+  <!-- Playing Style -->
+  <div class="question">
+  <h4 class="question">3- Playing Style</h4>
+    <div class="options2">
+      <label class="cardd"><input type="radio" formControlName="playingStyle" value="Possession"> Possession</label>
+      <label class="cardd"><input type="radio" formControlName="playingStyle" value="High Press"> High Press</label>
+      <label class="cardd"><input type="radio" formControlName="playingStyle" value="Counter Attack"> Counter Attack</label>
+    </div>
+    <div class="error" *ngIf="form.get('playingStyle')?.touched && form.get('playingStyle')?.invalid">
+      Please select a playing style
+    </div>
+  </div>
+
+  <!-- Budget Range -->
+  <div class="budget">
+   <h4 class="question">4- your Budget</h4>
+  
+  
+  <input 
+    type="number" 
+    formControlName="budget" 
+    placeholder="Enter your budget" 
+    class="budget-input">
+</div>
+
+  
+   
+    
+<div class="error" *ngIf="form.get('budget')?.touched">
+
+  <span *ngIf="form.get('budget')?.errors?.['required']">
+    Budget is required
+  </span>
+
+  <span *ngIf="form.get('budget')?.errors?.['min']">
+    Budget must be a positive number
+  </span>
+
+</div>
+   
+  
+
+  <button type="submit" [disabled]="form.invalid">Submit</button>
+</form>
+
+
+</div>
+
+

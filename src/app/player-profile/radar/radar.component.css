@@ -1,0 +1,16 @@
+
+:host {
+  display: block;
+  width: 100%;          /* تاخد كل عرض الصفحة */
+  max-width: 1200px;    /* اختياري للشاشات الكبيرة */
+  margin: 0 auto;       /* يركن في النص */
+  padding: 0;            /* لازم صفر */
+  height: auto;    
+/* مهم: ما تحطش height ثابت */
+}
+
+apx-chart {
+  width: 100% !important;
+  /* تاخد height من الـ container */
+        /* الحد الأدنى */
+}

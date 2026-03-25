@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "name": "Alisson Becker",
+    "age": 31,
+    "position": "GK",
+    "fitness": 90,
+    "passAccuracy": 85,
+    "isInjured": false,
+    "assists": 0,
+    "tackles": 1,
+    "nationalteam":"England",
+    "club":"Liverpool",
+    "matchesPlayed": 28,
+    "image": "https://fbref.com/req/202302030/images/headshots/7a2e46a8_2022.jpg"
+    
+  },
+  {
+    "id": 2,
+    "name": "Trent Alexander-Arnold",
+    "age": 25,
+    "position": "DF",
+    "fitness": 88,
+    "passAccuracy": 90,
+    "isInjured": false,
+    "assists": 12,
+    "nationalteam":"England",
+    "club":"Liverpool",
+    "tackles": 5,
+    "matchesPlayed": 30,
+    "image": "https://fbref.com/req/202302030/images/headshots/cd1acf9d_2022.jpg"
+    
+  },
+  {
+    "id": 3,
+    "name": "Virgil van Dijk",
+    "age": 32,
+    "position": "DF",
+    "fitness": 92,
+    "passAccuracy": 87,
+    "isInjured": false,
+    "assists": 2,
+    "nationalteam":"England",
+    "club":"Liverpool",
+    "tackles": 20,
+    "matchesPlayed": 29,
+    "image": "https://fbref.com/req/202302030/images/headshots/e06683ca_2022.jpg"
+   
+  },
+  {
+    "id": 4,
+    "name": "Joel Matip",
+    "age": 31,
+    "position": "DF",
+    "fitness": 89,
+    "passAccuracy": 84,
+    "nationalteam":"England",
+    "club":"Liverpool",
+    "isInjured": false,
+    "assists": 1,
+    "tackles": 18,
+    "matchesPlayed": 27,
+    "image": "https://fbref.com/req/202302030/images/headshots/b217ef29_2022.jpg"
+    
+  },
+  {
+    "id": 5,
+    "name": "Andrew Robertson",
+    "age": 27,
+    "position": "DF",
+    "fitness": 90,
+    "passAccuracy": 86,
+    "isInjured": false,
+    "nationalteam":"England",
+    "club":"Liverpool",
+    "assists": 10,
+    "tackles": 15,
+    "matchesPlayed": 30,
+    "image": "https://fbref.com/req/202302030/images/headshots/2e4f5f03_2022.jpg"
+    
+  },
+  {
+    "id": 6,
+    "name": "Ibrahima Konaté",
+    "age": 29,
+    "position": "MF",
+    "fitness": 87,
+    "passAccuracy": 88,
+    "isInjured": false,
+    "nationalteam":"England",
+    "club":"Liverpool",
+    "assists": 3,
+    "tackles": 22,
+    "matchesPlayed": 28,
+    "image": "https://fbref.com/req/202302030/images/headshots/5ed9b537_2022.jpg"
+   
+  },
+  {
+    "id": 7,
+    "name": "JAlexis Mac Allister",
+    "age": 33,
+    "position": "MF",
+    "fitness": 85,
+    "passAccuracy": 87,
+    "isInjured": false,
+    "nationalteam":"England",
+    "club":"Liverpool",
+    "assists": 5,
+    "tackles": 15,
+    "matchesPlayed": 29,
+    "image": "https://fbref.com/req/202302030/images/headshots/83d074ff_2022.jpg"
+    
+  },
+  {
+    "id": 8,
+    "name": "Thiago Alcantara",
+    "age": 32,
+    "position": "MF",
+    "fitness": 86,
+    "passAccuracy": 91,
+    "isInjured": false,
+    "nationalteam":"England",
+    "club":"Liverpool",
+    "assists": 7,
+    "tackles": 10,
+    "matchesPlayed": 27,
+    "image": "https://fbref.com/req/202302030/images/headshots/77e84962_2022.jpg"
+    
+  },
+  {
+    "id": 9,
+    "name": "Mohamed Salah",
+    "age": 26,
+    "position": "FW",
+    "fitness": 85,
+    "passAccuracy": 82,
+    "isInjured": false,
+    "nationalteam":"England",
+    "club":"Liverpool",
+    "assists": 8,
+    "tackles": 6,
+    "matchesPlayed": 29,
+    "image": "assets/p1.png"
+  
+  },
+   {
+    "id": 10,
+    "name": "Darwin Nunez",
+    "age": 25,
+    "position": "FW",
+    "fitness": 88,
+    "passAccuracy": 80,
+    "isInjured": false,
+    "nationalteam":"England",
+    "club":"Liverpool",
+    "assists": 6,
+    "tackles": 4,
+    "matchesPlayed": 28,
+    "image": "https://fbref.com/req/202302030/images/headshots/4d77b365_2022.jpg"
+   
+  },
+  {
+    "id": 11,
+    "name": "Luis Diaz",
+    "age": 26,
+    "position": "FW",
+    "fitness": 89,
+    "passAccuracy": 82,
+    "nationalteam":"England",
+    "club":"Liverpool",
+    "isInjured": false,
+    "assists": 8,
+    "tackles": 6,
+    "matchesPlayed": 29,
+    "image": "https://fbref.com/req/202302030/images/headshots/4a1a9578_2022.jpg"
+    
+  },
+  {
+    "id": 12,
+    "name": "Giorgi Mamardashvili",
+    "age": 26,
+    "position": "DF",
+    "fitness": 85,
+    "passAccuracy": 82,
+    "nationalteam":"England",
+    "club":"Liverpool",
+    "isInjured": false,
+    "assists": 8,
+    "tackles": 6,
+    "matchesPlayed": 29,
+    "image": "https://fbref.com/req/202302030/images/headshots/d4b73232_2022.jpg"
+   
+  },
+  {
+    "id": 13,
+    "name": "Alexander Isak",
+    "age": 26,
+    "position": "FW",
+    "fitness": 85,
+    "nationalteam":"England",
+    "club":"Liverpool",
+    "passAccuracy": 82,
+    "isInjured": false,
+    "assists": 8,
+    "tackles": 6,
+    "matchesPlayed": 29,
+    "image": "https://fbref.com/req/202302030/images/headshots/8e92be30_2022.jpg"
+    
+  },{
+    "id": 12,
+    "name": "Giorgi Mamardashvili",
+    "age": 26,
+    "position": "MF",
+    "fitness": 85,
+    "passAccuracy": 82,
+    "nationalteam":"England",
+    "club":"Liverpool",
+    "isInjured": false,
+    "assists": 8,
+    "tackles": 6,
+    "matchesPlayed": 29,
+    "image": "https://fbref.com/req/202302030/images/headshots/d4b73232_2022.jpg"
+   
+  },{
+    "id": 12,
+    "name": "Giorgi Mamardashvili",
+    "age": 26,
+    "position": "DF",
+    "fitness": 85,
+    "passAccuracy": 82,
+    "nationalteam":"England",
+    "club":"Liverpool",
+    "isInjured": false,
+    "assists": 8,
+    "tackles": 6,
+    "matchesPlayed": 29,
+    "image": "https://fbref.com/req/202302030/images/headshots/d4b73232_2022.jpg"
+   
+  }
+  
+  
+]

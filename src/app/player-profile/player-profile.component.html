@@ -1,0 +1,270 @@
+<!-- <section>
+    <h2 class="head">Player details</h2>
+    <div class="container">
+        <div class="left">
+        <div class="top_left">
+            <div class="img"><img src={{player.image}} alt="player image">
+            </div>
+        <div class="data">
+            <h3 class="name"> {{player.name}}</h3>
+            <div class="flex">
+            <h3 class="Age">Age:<span>{{player.age}}</span></h3>
+            <h3 class="position"><span>{{player.position}}</span></h3>
+            
+            </div>
+            <h3 class="nation">{{player.nationality}}</h3>
+        </div>
+        </div>
+        <div class="buttolm_left">
+            <h3 class="club">Club:<span>{{player.club}}</span> </h3>
+            <h3 class="league">League:<span>{{player.league}}</span></h3>
+            <h3 class="total_matchs">Total Matches:<span>{{player.stats.totalMatches}}</span> </h3>
+            
+            <h3 class="minutes">Minutes:<span>{{player.stats.minutes}}</span></h3>
+             <h3 class="Total_touches">Total touches of the ball: <span>{{player.stats.totalTouches}}</span></h3> 
+                <h3 class="carries">Total ball carries: <span>{{player.stats.totalCarries}}</span></h3>
+                <h3 class="recoveries">Total ball recoveries:<span>{{player.stats.totalRecoveries}}</span></h3>
+        </div>
+        </div>
+        
+            <div class="right">
+               <div class="radar-wrapper">
+    <app-radar></app-radar>
+  </div>
+            <div class="data_right">
+                <h3 class="goals">Goals:<span>{{player.stats.goals}}</span> </h3>
+                <h3 class="assist">Assists:<span>{{player.stats.assists}}</span> </h3>
+                <h3 class="xgoals"> Expected goals:<span>{{player.stats.expectedGoals}}</span> </h3>
+                <h3 class="xassist"> Expected Assists: <span>{{player.stats.expectedAssists}}</span></h3>
+                <h3 class="yellow_card">Yellow Cards: <span>{{player.stats.yellowCards}}</span></h3>
+                <h3 class="red_card">Red Cards: <span>{{player.stats.redCards}}</span></h3>
+            </div>
+               
+            </div>
+    </div>
+</section> -->
+<section>
+    <div class="container">
+        <div class="head">
+            <div class="img"><img src="{{player.image}}" alt="player image"></div>
+            <div class="main_data">
+                <div class="main_head">
+                    <h3 class="name">{{player.name}} </h3>
+                    <h3 class="nationaliy">{{player.nationality}}</h3>
+                </div>
+                <div class="under_name">
+                    <h3>{{player.position}}  |  {{player.club}}</h3>
+                    <h4 class="legue"><mat-icon fontSet="material-symbols-outlined">rewarded_ads</mat-icon> {{player.league}}</h4>
+                    <h4 class="age">{{player.age}} years old</h4>
+
+                </div>
+            </div>
+        </div>
+        <div class="hero">
+            <div class="right">
+                <app-radar></app-radar>
+            </div>
+           <div class="time">
+            <p class="title"><mat-icon>schedule</mat-icon>Playing Time</p>
+            <div class="time_divs">
+           <div class="time_data"><h5>Matches played </h5><h3>{{player.stats.PlayingTime.Matchesplayed}}</h3></div>
+           <div class="time_data"><h5>Minutes played </h5><h3>{{player.stats.PlayingTime.Minutesplayed}}</h3></div>
+           <div class="time_data"><h5>90s completed</h5><h3> {{player.stats.PlayingTime['90s']}}</h3></div>
+           <div class="time_data"><h5>Games started </h5><h3>{{player.stats.PlayingTime.Gamesstarted}}</h3></div>
+           </div>
+           </div>
+        </div>
+        <div class="cards">
+            <div class="card">
+                <p class="card_title"><mat-icon>sports_soccer</mat-icon> Attacking Stats</p>
+                <div class="row">
+                    <h5>Goals</h5>
+                    <h3>{{player.stats.Attacking.GoalsScored}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Assists</h5>
+                    <h3>{{player.stats.Attacking.AssistsProvided}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Goals+Assists</h5>
+                    <h3>{{player.stats.Attacking['Goals+Assists']}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Expected Goals</h5>
+                    <h3>{{player.stats.Attacking.Expectedgoals}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Expected Assists</h5>
+                    <h3>{{player.stats.Attacking.Expectedassists}}</h3>
+                </div>
+
+                <div class="row">
+                    <h5>npxG</h5>
+                    <h3>{{player.stats.Attacking.npxG}}</h3>
+                </div>
+                <div class="row">
+                    <h5>G-PK</h5>
+                    <h3>{{player.stats.Attacking['G-PK']}}</h3>
+                </div>
+            </div>
+            <div class="card">
+                  <p class="card_title"><mat-icon>security</mat-icon> Defensive Stats</p>
+                <div class="row">
+                    <h5>Total Tackles</h5>
+                    <h3>{{player.stats.Defensive.Totaltackles}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Tackleswon</h5>
+                    <h3>{{player.stats.Defensive.Tackleswon}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Blocks Made</h5>
+                    <h3>{{player.stats.Defensive.Blocksmade}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Interceptions</h5>
+                    <h3>{{player.stats.Defensive.Interceptions}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Tkl+Int</h5>
+                    <h3>{{player.stats.Defensive['Tkl+Int']}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Clearances</h5>
+                    <h3>{{player.stats.Defensive.Clearances}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Err</h5>
+                    <h3>{{player.stats.Defensive.Err}}</h3>
+                </div>
+            </div>
+            <div class="card">
+                <p class="card_title"><mat-icon>front_hand</mat-icon> Goalkeeping Stats</p>
+                <div class="row">
+                    <h5>Goals Conceded</h5>
+                    <h3>{{player.stats.Goalkeeping.GoalsConceded}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Saves Made</h5>
+                    <h3>{{player.stats.Goalkeeping.Savesmade}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Save Percentage</h5>
+                    <h3> <span class="saves">  {{player.stats.Goalkeeping.Savepercentage}} %</span>      </h3>
+                </div>
+                <div class="row">
+                    <h5>Clean Sheets</h5>
+                    <h3>{{player.stats.Goalkeeping.Cleansheets}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Clean Sheet Percentage</h5>
+                    <h3> <span class="saves">  {{player.stats.Goalkeeping.Cleansheetpercentage}} %</span>      </h3>
+                </div>
+                <div class="row">
+                    <h5>Penalties Faced</h5>
+                    <h3>{{player.stats.Goalkeeping.Penaltiesfaced}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Penalty Saves</h5>
+                    <h3>{{player.stats.Goalkeeping.Penaltysaves}}</h3>
+                </div>
+            </div>
+            <div class="card">
+                <p class="card_title"><mat-icon>touch_app</mat-icon> Possession Stats</p>
+                 <div class="row">
+                    <h5>Touches</h5>
+                    <h3>{{player.stats.Possession.Touches}}</h3>
+                </div>
+                 <div class="row">
+                    <h5>Carries</h5>
+                    <h3>{{player.stats.Possession.Carries}}</h3>
+                </div>
+                 <div class="row">
+                    <h5>Progressive Runs</h5>
+                    <h3>{{player.stats.Possession.Progressiveruns}}</h3>
+                </div>
+                 <div class="row">
+                    <h5>Miscontrols</h5>
+                    <h3>{{player.stats.Possession.Miscontrols}}</h3>
+                </div>
+                 <div class="row">
+                    <h5>Time Dispossessied</h5>
+                    <h3>{{player.stats.Possession.Dis}}</h3>
+                </div>
+            </div>
+            <div class="card">
+                 <p class="card_title"><mat-icon>error</mat-icon> Miscellaneous Stats</p>
+                <div class="row">
+                    <h5>Yellowcards</h5>
+                    <h3><span class="yellow-card">{{player.stats.Miscellaneous.Yellowcards}}</span></h3>
+                </div>
+                 <div class="row">
+                    <h5>Redcards</h5>
+                    <h3><span class="red-card">{{player.stats.Miscellaneous.Redcards}}</span></h3>
+                </div>
+               
+                <div class="row">
+                    <h5>Penaltieswon</h5>
+                    <h3>{{player.stats.Miscellaneous.Penaltieswon}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Penaltiesconceded</h5>
+                    <h3>{{player.stats.Miscellaneous.Penaltiesconceded}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Ballrecoveries</h5>
+                    <h3>{{player.stats.Miscellaneous.Ballrecoveries}}</h3>
+                </div>
+            </div>
+            <div class="card">
+                 <p class="card_title"><mat-icon>hub</mat-icon> Passing Stats</p>
+                <div class="row">
+                    <h5>ProgressivePasses</h5>
+                    <h3>{{player.stats.Passing.ProgressivePasses}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Progressivecarries</h5>
+                    <h3>{{player.stats.Passing.Progressivecarries}}</h3>
+                </div>
+                <div class="row">
+                    <h5>Keypasses</h5>
+                    <h3>{{player.stats.Passing.Keypasses}}</h3>
+                </div>
+                <div class="row">
+                    <h5>PPA</h5>
+                    <h3>{{player.stats.Passing.PPA}}</h3>
+                </div>
+            </div>
+
+            
+        </div>
+
+
+        <div class="similar">
+  <div class="similar_head">
+    <h3>Similar Players</h3>
+  </div>
+
+  <div class="similar_cards">
+    @for (player of similarPlayers; track $index) {
+    <div class="similar_card" >
+      
+      <div class="sim_img">
+        <img [src]="player.image" alt="player">
+      </div>
+
+      <div class="sim_info">
+        <h4 class="sim_name">{{player.name}}</h4>
+        <p class="sim_club">{{player.club}}</p>
+        <p class="sim_position">{{player.position}}</p>
+      </div>
+    
+    </div>
+    }
+  </div>
+</div>
+    </div>
+</section>
+
+
+
