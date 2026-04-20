@@ -1,519 +1,463 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatIcon } from "@angular/material/icon";
-import { max, min } from 'rxjs';
+import { MatIcon } from '@angular/material/icon';
+import type { DropdownOption } from '../../shared/custom-dropdown/custom-dropdown.component';
+import { CustomDropdownModule } from '../../shared/custom-dropdown/custom-dropdown.module';
+import { environment } from '../../../environments/environment';
+
+interface LeagueApiResponse {
+  leagueId: number;
+  leagueName: string;
+  clubs: unknown[] | null;
+}
+
+interface ClubApiResponse {
+  clubId: number;
+  clubName: string;
+  leagueId: number;
+  league: unknown | null;
+}
+
+interface PlayerFilterQuery {
+  name?: string;
+  position?: string;
+  leagueId?: number;
+  clubId?: number;
+  nationality?: string;
+  minAge?: number;
+  maxAge?: number;
+  minMP?: number;
+  minStarts?: number;
+  minMinutes?: number;
+  min90s?: number;
+  minGoals?: number;
+  minAssists?: number;
+  minGPlusA?: number;
+  minXG?: number;
+  minXAG?: number;
+  minNpxG?: number;
+  minGMinusPK?: number;
+  minTackles?: number;
+  minTklW?: number;
+  minBlocks?: number;
+  minInterceptions?: number;
+  minTklInt?: number;
+  minClearances?: number;
+  minErrors?: number;
+  minProgPasses?: number;
+  minProgCarries?: number;
+  minKeyPasses?: number;
+  minPPA?: number;
+  minTouches?: number;
+  minCarries?: number;
+  minProgRunsRec?: number;
+  minMiscontrols?: number;
+  minDispossessed?: number;
+  minGA?: number;
+  minSaves?: number;
+  minSavePct?: number;
+  minCS?: number;
+  minCSPct?: number;
+  minYellowCards?: number;
+  minRedCards?: number;
+  minPKWon?: number;
+  minPKCon?: number;
+  minRecoveries?: number;
+  page: number;
+  pageSize: number;
+}
 
 @Component({
   selector: 'app-filters',
-   standalone: true,
-  imports: [ReactiveFormsModule, MatIcon],
+  standalone: true,
+  imports: [ReactiveFormsModule, MatIcon, CustomDropdownModule],
   templateUrl: './filters.component.html',
-  styleUrls: ['./filters.component.scss']
+  styleUrls: ['./filters.component.css']
 })
 export class FiltersComponent implements OnInit {
-private fb = inject(FormBuilder);
-private http =inject(HttpClient);
- leagues: any[] = [];
- clubs:any[]=[];
- nationality:any[]=[]
- filteredClubs: any[] = [];
+  private readonly API_BASE_URL = `${environment.apiBaseUrl}/api/players`;
+  private readonly MIN_ZERO_VALIDATOR = [Validators.min(0)];
+
+  private readonly statFieldMap: Record<string, keyof PlayerFilterQuery> = {
+    MP: 'minMP',
+    Starts: 'minStarts',
+    Minutes: 'minMinutes',
+    Minutes90s: 'min90s',
+    GoalsScored: 'minGoals',
+    AssitsProvided: 'minAssists',
+    GPlusA: 'minGPlusA',
+    ExpectedGoals: 'minXG',
+    ExpectedAssistes: 'minXAG',
+    NpxG: 'minNpxG',
+    GMinusPK: 'minGMinusPK',
+    TotalTackels: 'minTackles',
+    TklW: 'minTklW',
+    BlocksMade: 'minBlocks',
+    Interceptions: 'minInterceptions',
+    TklInt: 'minTklInt',
+    Clearances: 'minClearances',
+    Errors: 'minErrors',
+    Progressivepasses: 'minProgPasses',
+    ProgCarries: 'minProgCarries',
+    KeyPasses: 'minKeyPasses',
+    PassesIntothePenaltyArea: 'minPPA',
+    Touches: 'minTouches',
+    Carries: 'minCarries',
+    ProgRunsRec: 'minProgRunsRec',
+    Miscontrols: 'minMiscontrols',
+    Dispossessed: 'minDispossessed',
+    GA: 'minGA',
+    SavesMade: 'minSaves',
+    SavePct: 'minSavePct',
+    CleanSheates: 'minCS',
+    CSPct: 'minCSPct',
+    YellowCards: 'minYellowCards',
+    RedCards: 'minRedCards',
+    PKWon: 'minPKWon',
+    PKCon: 'minPKCon',
+    Recoveries: 'minRecoveries'
+  };
+
+  private fb = inject(FormBuilder);
+  private http = inject(HttpClient);
+
+  @Output() filtersApplied = new EventEmitter<Record<string, string | number>>();
+
+  leagues: LeagueApiResponse[] = [];
+  clubs: ClubApiResponse[] = [];
+  nationalities: string[] = [];
+  filteredClubs: ClubApiResponse[] = [];
+
+  positionOptions: DropdownOption[] = [];
+  leagueOptions: DropdownOption[] = [];
+  nationalityOptions: DropdownOption[] = [];
+  clubOptions: DropdownOption[] = [];
 
   filtersForm!: FormGroup;
-  age_rule:any={
-    age:{min:15 , max:45}
-  }
-
-  // قواعد كل Position
-  POSITION_RULES: any = {
-    attacker: {
-      GoalsScored: { min: 0, max: 300 },
-      AssitsProvided: { min: 0, max: 300 },
-      ExpectedGoals: { min: 0, max: 200 },
-      ExpectedAssistes: { min: 0, max: 200 },
-      // Defender stats
-      TotalTackels:{min:0,max:150},
-      BlocksMade:{min:0,max:200},
-      Interceptions:{min:0,max:300},
-      Clearances:{min:0,max:300},
-      //Passing &Creativity Stats
-      Progressivepasses:{min:0,max:500},
-      KeyPasses:{min:0,max:2000},
-      PassesIntothePenaltyArea:{min:0,max:500},
-      //Goalkeeping stats
-      SavesMade:{min:0,max:0},
-      CleanSheates:{min:0,max:0},
-      penaltySaved:{min:0,max:0},
-      //Possession& Ball Control
-      Touches:{min:0,max:900},
-      Carries:{min:0,max:800},
-      
-    },
-    midfielder: {
-       GoalsScored: { min: 0, max: 70 },
-      AssitsProvided: { min: 0, max: 500 },
-      ExpectedGoals: { min: 0, max: 40 },
-      ExpectedAssistes: { min: 0, max: 700 },
-      // Defender stats
-      TotalTackels:{min:0,max:200},
-      BlocksMade:{min:0,max:300},
-      Interceptions:{min:0,max:400},
-      Clearances:{min:0,max:400},
-      //Passing &Creativity Stats
-      Progressivepasses:{min:0,max:500},
-      KeyPasses:{min:0,max:3000},
-      PassesIntothePenaltyArea:{min:0,max:400},
-      //Goalkeeping stats
-      SavesMade:{min:0,max:0},
-      CleanSheates:{min:0,max:0},
-      penaltySaved:{min:0,max:0},
-      //Possession& Ball Control
-      Touches:{min:0,max:950},
-      Carries:{min:0,max:900},
-      
-    },
-    defender: {
-      GoalsScored: { min: 0, max: 30 },
-      AssitsProvided: { min: 0, max: 200 },
-      ExpectedGoals: { min: 0, max: 40 },
-      ExpectedAssistes: { min: 0, max: 220 },
-      // Defender stats
-      TotalTackels:{min:0,max:300},
-      BlocksMade:{min:0,max:400},
-      Interceptions:{min:0,max:500},
-      Clearances:{min:0,max:600},
-      //Passing &Creativity Stats
-      Progressivepasses:{min:0,max:300},
-      KeyPasses:{min:0,max:2000},
-      PassesIntothePenaltyArea:{min:0,max:100},
-      //Goalkeeping stats
-      SavesMade:{min:0,max:0},
-      CleanSheates:{min:0,max:0},
-      penaltySaved:{min:0,max:0},
-      //Possession& Ball Control
-      Touches:{min:0,max:900},
-      Carries:{min:0,max:800},
-    },
-    goalkeeper: {
-      GoalsScored: { min: 0, max: 6 },
-      AssitsProvided: { min: 0, max: 20 },
-      ExpectedGoals: { min: 0, max: 10 },
-      ExpectedAssistes: { min: 0, max: 25 },
-      // Defender stats
-      TotalTackels:{min:0,max:20},
-      BlocksMade:{min:0,max:200},
-      Interceptions:{min:0,max:100},
-      Clearances:{min:0,max:300},
-      //Passing &Creativity Stats
-      Progressivepasses:{min:0,max:500},
-      KeyPasses:{min:0,max:2000},
-      PassesIntothePenaltyArea:{min:0,max:10},
-      //Goalkeeping stats
-      SavesMade:{min:0,max:500},
-      CleanSheates:{min:0,max:100},
-      penaltySaved:{min:0,max:70},
-      //Possession& Ball Control
-      Touches:{min:0,max:400},
-      Carries:{min:0,max:300},
-     
-    }
-  };
 
   ngOnInit(): void {
     this.initForm();
-    // this.handlePositionChange();
-    this.loadleagus();
+    this.loadPositions();
+    this.loadLeagues();
     this.loadNationalities();
-    this.loadclubs();
-    
+    this.loadClubs();
 
-    this.filtersForm.get('league')?.valueChanges.subscribe(leagueName => {
-    this.filteredClubs = this.clubs.filter(c => c.leagueName == leagueName);
-  });
-  }
-  ///هنا هبقا اربط ال api بتاع الدوريات 
- loadleagus(){
-  this.http.get<any[]>('assets/leagues.json').subscribe({
-    next: (data) => {
-          this.leagues = data;
-          console.log(data);
-        },
-        error: (err) => console.error(err)
-     
-  })
- }
- ///هنا هبقا اربط ال api بتاع الاندية 
- loadclubs(){
-  this.http.get<any[]>('assets/clubs.json').subscribe({
-    next:(data)=>{
-      this.clubs=data;
-      console.log(data);
-    },
-    error:(err)=>console.error(err)
-  })
- }
- //هنا هبقا اربط api بتاع الجنسيات
- loadNationalities(){
-  this.http.get<any[]>('assets/nationality.json').subscribe({
-    next:(data)=>{
-      this.nationality=data
-      console.log(data)
-    },
-    error:(err)=>console.error(err)
-  })
- }
- 
-  // 1) إنشاء الفورم
-  initForm() {
-    this.filtersForm = this.fb.group({
-      position: ['',[Validators.required]],
-      league:[''],
-      clubs:[''],
-      nationality:[''],
+    this.filtersForm.get('league')?.valueChanges.subscribe(leagueIdValue => {
+      const selectedLeagueId = this.toOptionalPositiveNumber(leagueIdValue);
 
-      ageMin:[null],
-      ageMax:[null],
+      if (selectedLeagueId === undefined) {
+        this.filteredClubs = [...this.clubs];
+      } else {
+        this.filteredClubs = this.clubs.filter(club => club.leagueId === selectedLeagueId);
+      }
 
-      GoalsScoredMin: [null],
-      GoalsScoredMax: [null],
+      this.clubOptions = this.mapClubsToOptions(this.filteredClubs);
 
-      ExpectedGoalsMin: [null],
-     ExpectedGoalsMax: [null],
-
-      AssitsProvidedMin: [null],
-      AssitsProvidedMax: [null],
-
-      ExpectedAssistesMin: [null],
-      ExpectedAssistesMax: [null],
-
-      TotalTackelsMin: [null],
-      TotalTackelsMax: [null],
-
-      BlocksMadeMin: [null],
-      BlocksMadeMax: [null],
-
-      InterceptionsMin: [null],
-      InterceptionsMax: [null],
-
-      ClearancesMin: [null],
-      ClearancesMax: [null],
-
-      ProgressivepassesMin: [null],
-      ProgressivepassesMax: [null],
-
-      KeyPassesMin: [null],
-      KeyPassesMax: [null],
-
-      PassesIntothePenaltyAreaMin: [null],
-      PassesIntothePenaltyAreaMax: [null],
-
-      SavesMadeMin: [null],
-      SavesMadeMax: [null],
-
-      CleanSheatesMin: [null],
-      CleanSheatesMax: [null],
-
-      penaltySavedMin: [null],
-      penaltySavedMax: [null],
-
-      TouchesMin: [null],
-      TouchesMax: [null],
-
-      CarriesMin: [null],
-      CarriesMax: [null],
-
-
+      const selectedClubId = this.toOptionalPositiveNumber(this.filtersForm.get('clubs')?.value);
+      if (selectedClubId !== undefined && !this.filteredClubs.some(club => club.clubId === selectedClubId)) {
+        this.filtersForm.get('clubs')?.setValue('');
+      }
     });
   }
-get Possinvalid(){
-return this.filtersForm.controls['position'].invalid
- 
- }
-toNumberOrDefault(value: any, def: number): number {
-  if (value === '' || value === null || value === undefined) return def;
-  const n = Number(value);
-  return isNaN(n) ? def : n;
-}
 
-buildRange(
-  minVal: any,
-  maxVal: any,
-  rule: { min: number; max: number }
-) {
-  let min = this.toNumberOrDefault(minVal, rule.min);
-  let max = this.toNumberOrDefault(maxVal, rule.max);
+  initForm(): void {
+    this.filtersForm = this.fb.group({
+      name: [''],
+      position: ['', [Validators.required]],
+      league: [''],
+      clubs: [''],
+      nationality: [''],
 
-  if (max < 0) {
-  max = 0;
-}
-  // clamp بالقواعد
-  min = Math.max(min, rule.min);
-  max = Math.min(max, rule.max);
+      ageMin: [null, [Validators.min(15), Validators.max(45)]],
+      ageMax: [null, [Validators.min(15), Validators.max(45)]],
 
-  // لو min > max → نشيل min
-  if (min > max) {
-    return { max };
+      MP: [null, this.MIN_ZERO_VALIDATOR],
+      Starts: [null, this.MIN_ZERO_VALIDATOR],
+      Minutes: [null, this.MIN_ZERO_VALIDATOR],
+      Minutes90s: [null, this.MIN_ZERO_VALIDATOR],
+
+      GoalsScored: [null, this.MIN_ZERO_VALIDATOR],
+      AssitsProvided: [null, this.MIN_ZERO_VALIDATOR],
+      GPlusA: [null, this.MIN_ZERO_VALIDATOR],
+      ExpectedGoals: [null, this.MIN_ZERO_VALIDATOR],
+      ExpectedAssistes: [null, this.MIN_ZERO_VALIDATOR],
+      NpxG: [null, this.MIN_ZERO_VALIDATOR],
+      GMinusPK: [null, this.MIN_ZERO_VALIDATOR],
+
+      TotalTackels: [null, this.MIN_ZERO_VALIDATOR],
+      TklW: [null, this.MIN_ZERO_VALIDATOR],
+      BlocksMade: [null, this.MIN_ZERO_VALIDATOR],
+      Interceptions: [null, this.MIN_ZERO_VALIDATOR],
+      TklInt: [null, this.MIN_ZERO_VALIDATOR],
+      Clearances: [null, this.MIN_ZERO_VALIDATOR],
+      Errors: [null, this.MIN_ZERO_VALIDATOR],
+
+      Progressivepasses: [null, this.MIN_ZERO_VALIDATOR],
+      ProgCarries: [null, this.MIN_ZERO_VALIDATOR],
+      KeyPasses: [null, this.MIN_ZERO_VALIDATOR],
+      PassesIntothePenaltyArea: [null, this.MIN_ZERO_VALIDATOR],
+      Touches: [null, this.MIN_ZERO_VALIDATOR],
+      Carries: [null, this.MIN_ZERO_VALIDATOR],
+      ProgRunsRec: [null, this.MIN_ZERO_VALIDATOR],
+      Miscontrols: [null, this.MIN_ZERO_VALIDATOR],
+      Dispossessed: [null, this.MIN_ZERO_VALIDATOR],
+
+      GA: [null, this.MIN_ZERO_VALIDATOR],
+      SavesMade: [null, this.MIN_ZERO_VALIDATOR],
+      SavePct: [null, this.MIN_ZERO_VALIDATOR],
+      CleanSheates: [null, this.MIN_ZERO_VALIDATOR],
+      CSPct: [null, this.MIN_ZERO_VALIDATOR],
+
+      YellowCards: [null, this.MIN_ZERO_VALIDATOR],
+      RedCards: [null, this.MIN_ZERO_VALIDATOR],
+      PKWon: [null, this.MIN_ZERO_VALIDATOR],
+      PKCon: [null, this.MIN_ZERO_VALIDATOR],
+      Recoveries: [null, this.MIN_ZERO_VALIDATOR]
+    });
   }
 
- 
+  get Possinvalid(): boolean {
+    const hasSearchName = !!this.cleanString(this.filtersForm.get('name')?.value);
+    return !hasSearchName && this.filtersForm.controls['position'].invalid;
+  }
 
-  return { min, max };
-}
+  loadPositions(): void {
+    this.http.get<string[]>(`${this.API_BASE_URL}/positions`).subscribe({
+      next: data => {
+        this.positionOptions = this.mapStringArrayToOptions(data);
+      },
+      error: err => console.error(err)
+    });
+  }
 
-  // 4) قبل الريكوست صحّح كله
- sanitizeFilters() {
-  const pos = this.filtersForm.value.position;
-  if (!pos) return this.filtersForm.value;
+  loadLeagues(): void {
+    this.http.get<LeagueApiResponse[]>(`${this.API_BASE_URL}/leagues`).subscribe({
+      next: data => {
+        this.leagues = Array.isArray(data) ? data : [];
+        this.leagueOptions = this.mapLeaguesToOptions(this.leagues);
+      },
+      error: err => console.error(err)
+    });
+  }
 
-  const v = this.filtersForm.value;
-  const rules = this.POSITION_RULES[pos];
-  const rule_age=this.age_rule
-  return {
-    position: pos,
-    leagues: v.league || undefined,
-    club: v.clubs || undefined,
-    nationality: v.nationality || undefined,
+  loadClubs(): void {
+    this.http.get<ClubApiResponse[]>(`${this.API_BASE_URL}/clubs`).subscribe({
+      next: data => {
+        this.clubs = Array.isArray(data) ? data : [];
+        this.filteredClubs = [...this.clubs];
+        this.clubOptions = this.mapClubsToOptions(this.filteredClubs);
+      },
+      error: err => console.error(err)
+    });
+  }
 
-    age: this.buildRange(v.ageMin, v.ageMax, rule_age.age),
+  loadNationalities(): void {
+    this.http.get<string[]>(`${this.API_BASE_URL}/nationalities`).subscribe({
+      next: data => {
+        this.nationalities = Array.isArray(data) ? data : [];
+        this.nationalityOptions = this.mapStringArrayToOptions(this.nationalities);
+      },
+      error: err => console.error(err)
+    });
+  }
 
-    GoalsScored: this.buildRange(
-      v.GoalsScoredMin,
-      v.GoalsScoredMax,
-      rules.GoalsScored
-    ),
+  mapClubsToOptions(items: ClubApiResponse[]): DropdownOption[] {
+    return items.map(item => ({
+      value: String(item.clubId),
+      label: item.clubName
+    }));
+  }
 
-    ExpectedGoals: this.buildRange(
-      v.ExpectedGoalsMin,
-      v.ExpectedGoalsMax,
-      rules.ExpectedGoals
-    ),
+  mapLeaguesToOptions(items: LeagueApiResponse[]): DropdownOption[] {
+    return items.map(item => ({
+      value: String(item.leagueId),
+      label: item.leagueName
+    }));
+  }
 
-    AssitsProvided: this.buildRange(
-      v.AssitsProvidedMin,
-      v.AssitsProvidedMax,
-      rules.AssitsProvided
-    ),
+  mapStringArrayToOptions(items: string[]): DropdownOption[] {
+    return items.map(item => ({
+      value: item,
+      label: item
+    }));
+  }
 
-    ExpectedAssistes: this.buildRange(
-      v.ExpectedAssistesMin,
-      v.ExpectedAssistesMax,
-      rules.ExpectedAssistes
-    ),
+  private toOptionalNonNegativeNumber(value: unknown): number | undefined {
+    if (value === null || value === undefined || value === '') {
+      return undefined;
+    }
 
-    TotalTackels: this.buildRange(
-      v.TotalTackelsMin,
-      v.TotalTackelsMax,
-      rules.TotalTackels
-    ),
+    const parsed = Number(value);
+    if (Number.isNaN(parsed) || parsed < 0) {
+      return undefined;
+    }
 
-    BlocksMade: this.buildRange(
-      v.BlocksMadeMin,
-      v.BlocksMadeMax,
-      rules.BlocksMade
-    ),
+    return parsed;
+  }
 
-    Interceptions: this.buildRange(
-      v.InterceptionsMin,
-      v.InterceptionsMax,
-      rules.Interceptions
-    ),
+  private toOptionalPositiveNumber(value: unknown): number | undefined {
+    const parsed = this.toOptionalNonNegativeNumber(value);
+    if (parsed === undefined || parsed <= 0) {
+      return undefined;
+    }
 
-    Clearances: this.buildRange(
-      v.ClearancesMin,
-      v.ClearancesMax,
-      rules.Clearances
-    ),
+    return parsed;
+  }
 
-     Progressivepasses: this.buildRange(
-      v.ProgressivepassesMin,
-      v.ProgressivepassesMax,
-      rules.Progressivepasses
-    ),
-     KeyPasses: this.buildRange(
-      v.KeyPassesMin,
-      v.KeyPassesMax,
-      rules.KeyPasses
-    ),
-     PassesIntothePenaltyArea: this.buildRange(
-      v.PassesIntothePenaltyAreaMin,
-      v.PassesIntothePenaltyAreaMax,
-      rules.PassesIntothePenaltyArea
-    ),
+  private toOptionalAge(value: unknown): number | undefined {
+    const parsed = this.toOptionalNonNegativeNumber(value);
+    if (parsed === undefined) {
+      return undefined;
+    }
 
-     SavesMade: this.buildRange(
-      v.SavesMadeMin,
-      v.SavesMadeMax,
-      rules.SavesMade
-    ),
-     CleanSheates: this.buildRange(
-      v.CleanSheatesMin,
-      v.CleanSheatesMax,
-      rules.CleanSheates
-    ),
-    penaltySaved: this.buildRange(
-      v.penaltySavedMin,
-      v.penaltySavedMax,
-      rules.penaltySaved
-    ),
+    return parsed;
+  }
 
-     Touches: this.buildRange(
-      v.TouchesMin,
-      v.TouchesMax,
-      rules.Touches
-    ),
+  private cleanString(value: unknown): string | undefined {
+    if (typeof value !== 'string') {
+      return undefined;
+    }
 
-     Carries: this.buildRange(
-      v.CarriesMin,
-      v.CarriesMax,
-      rules.Carries
-    ),
+    const cleaned = value.trim();
+    return cleaned ? cleaned : undefined;
+  }
 
+  private removeEmptyFields<T extends Record<string, unknown>>(obj: T): Partial<T> {
+    const cleaned: Partial<T> = {};
 
+    Object.entries(obj).forEach(([key, value]) => {
+      if (value === undefined || value === null || value === '') {
+        return;
+      }
 
-  };
-}
+      (cleaned as Record<string, unknown>)[key] = value;
+    });
 
+    return cleaned;
+  }
 
-  // 5) لما اليوزر يدوس Apply
-  applyFilters() {
-    const cleanFilters = this.sanitizeFilters();
+  buildFilterRequest(): PlayerFilterQuery {
+    const value = this.filtersForm.value;
 
-    console.log('Request Data:', cleanFilters);
+    const query: Partial<PlayerFilterQuery> = {
+      name: this.cleanString(value.name),
+      position: this.cleanString(value.position),
+      leagueId: this.toOptionalPositiveNumber(value.league),
+      clubId: this.toOptionalPositiveNumber(value.clubs),
+      nationality: this.cleanString(value.nationality),
+      page: 1,
+      pageSize: 30
+    };
 
-    // هنا تبعت للباك
-    // this.http.get('/players', { params: cleanFilters }).subscribe(...)
+    const minAge = this.toOptionalAge(value.ageMin);
+    const maxAge = this.toOptionalAge(value.ageMax);
+
+    if (maxAge !== undefined) {
+      query.maxAge = maxAge;
+    }
+
+    if (minAge !== undefined && (maxAge === undefined || minAge <= maxAge)) {
+      query.minAge = minAge;
+    }
+
+    Object.entries(this.statFieldMap).forEach(([formField, queryField]) => {
+      const parsed = this.toOptionalNonNegativeNumber(value[formField]);
+      if (parsed !== undefined) {
+        (query as Record<string, unknown>)[queryField] = parsed;
+      }
+    });
+
+    return this.removeEmptyFields(query) as PlayerFilterQuery;
+  }
+
+  applyFilters(): void {
+    const selectedPosition = this.cleanString(this.filtersForm.get('position')?.value);
+    const searchName = this.cleanString(this.filtersForm.get('name')?.value);
+
+    if (!selectedPosition && !searchName) {
+      this.filtersForm.get('position')?.markAsTouched();
+      return;
+    }
+
+    const requestQuery = this.buildFilterRequest();
+    this.filtersApplied.emit(requestQuery as unknown as Record<string, string | number>);
+    this.scrollToTop();
+    this.resetFilters();
+  }
+
+  private scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  onFilterInput(event: Event): void {
+    const target = event.target as HTMLInputElement | null;
+    if (!target || target.type !== 'number') {
+      return;
+    }
+
+    const parsed = Number(target.value);
+    if (!Number.isNaN(parsed) && parsed < 0) {
+      target.value = '0';
+
+      const controlName = target.getAttribute('formControlName');
+      if (controlName) {
+        this.filtersForm.get(controlName)?.setValue(0);
+      }
+    }
+  }
+
+  private resetFilters(): void {
+    this.filtersForm.reset({
+      name: '',
+      position: '',
+      league: '',
+      clubs: '',
+      nationality: '',
+      ageMin: null,
+      ageMax: null,
+      MP: null,
+      Starts: null,
+      Minutes: null,
+      Minutes90s: null,
+      GoalsScored: null,
+      AssitsProvided: null,
+      GPlusA: null,
+      ExpectedGoals: null,
+      ExpectedAssistes: null,
+      NpxG: null,
+      GMinusPK: null,
+      TotalTackels: null,
+      TklW: null,
+      BlocksMade: null,
+      Interceptions: null,
+      TklInt: null,
+      Clearances: null,
+      Errors: null,
+      Progressivepasses: null,
+      ProgCarries: null,
+      KeyPasses: null,
+      PassesIntothePenaltyArea: null,
+      Touches: null,
+      Carries: null,
+      ProgRunsRec: null,
+      Miscontrols: null,
+      Dispossessed: null,
+      GA: null,
+      SavesMade: null,
+      SavePct: null,
+      CleanSheates: null,
+      CSPct: null,
+      YellowCards: null,
+      RedCards: null,
+      PKWon: null,
+      PKCon: null,
+      Recoveries: null
+    });
+
+    this.filteredClubs = [...this.clubs];
+    this.clubOptions = this.mapClubsToOptions(this.filteredClubs);
+    this.filtersForm.markAsPristine();
+    this.filtersForm.markAsUntouched();
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//////حاسس انه ملهوش لازمة ومش فعالة 
-  // 2) لو اليوزر غيّر البوزيشن
-  // handlePositionChange() {
-  //   this.filtersForm.get('position')?.valueChanges.subscribe(pos => {
-  //     if (!pos) return;
-
-  //     const rules = this.POSITION_RULES[pos];
-
-  //     this.autoCorrectAll(rules); // أول ما يختار Position صحّح القيم الحالية لو أكبر/أصغر
-  //   });
-  // }
-
-  // 3) تصحيح كل الإحصائيات حسب قواعد البوزيشن
-  // autoCorrectAll(rules: any) {
-  //   const updatedValues: any = {};
-  //   let agemin=this.filtersForm.value.ageMin;
-  //    let agemax=this.filtersForm.value.ageMax;
-  //   if(agemin && agemin < 15){
-  //     agemin = 15;
-  //   }
-  //   if(agemax&&agemax>45){
-  //     agemax = 45;
-  //   }
-  //   if(agemax&&agemin && agemin>agemax){
-  //     agemin = agemax;
-
-  //   }
-  //   updatedValues.ageMin=agemin;
-  //   updatedValues.ageMax=agemax;
-
-    
-  //   // expected goals
-  //   const xgMin = this.filtersForm.value.expectedGoalsMin;
-  //   const xgMax = this.filtersForm.value.expectedGoalsMax;
-
-  //   updatedValues.expectedGoalsMin = xgMin < rules.expectedGoals.min ? rules.expectedGoals.min : xgMin;
-  //   updatedValues.expectedGoalsMax = xgMax > rules.expectedGoals.max ? rules.expectedGoals.max : xgMax;
-    
-
-  //   // passes
-  //   const passesMin = this.filtersForm.value.passesMin;
-  //   const passesMax = this.filtersForm.value.passesMax;
-
-  //   updatedValues.passesMin = passesMin < rules.passes.min ? rules.passes.min : passesMin;
-  //   updatedValues.passesMax = passesMax > rules.passes.max ? rules.passes.max : passesMax;
-
-  //   // shots
-  //   const shotsMin = this.filtersForm.value.shotsMin;
-  //   const shotsMax = this.filtersForm.value.shotsMax;
-
-  //   updatedValues.shotsMin = shotsMin < rules.shots.min ? rules.shots.min : shotsMin;
-  //   updatedValues.shotsMax = shotsMax > rules.shots.max ? rules.shots.max : shotsMax;
-
-  //   // chances
-  //   const chancesMin = this.filtersForm.value.chancesMin;
-  //   const chancesMax = this.filtersForm.value.chancesMax;
-
-  //   updatedValues.chancesMin = chancesMin < rules.chances.min ? rules.chances.min : chancesMin;
-  //   updatedValues.chancesMax = chancesMax > rules.chances.max ? rules.chances.max : chancesMax;
-
-  //   this.filtersForm.patchValue(updatedValues, { emitEvent: false });
-  // }

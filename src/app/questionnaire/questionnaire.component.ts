@@ -4,6 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { FormationService } from '../services/formation.service';
+import { environment } from '../../environments/environment';
+
+interface LeagueApiResponse {
+  leagueId: number;
+  leagueName: string;
+  clubs: unknown[] | null;
+}
 
 @Component({
   selector: 'app-questionnaire',
@@ -18,7 +25,7 @@ export class QuestionnaireComponent {
   form: FormGroup;
   isOpen=false;
   private formationService=inject(FormationService)
-  leagues:any[]=[];
+  leagues: LeagueApiResponse[] = [];
   private http: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
  ngOnInit() {
@@ -46,15 +53,17 @@ this.isOpen=false;
 
   ////دا بيحمل الدوريات ف السيلكت بوكس
  LoadLeagues(){
-  this.http.get<any[]>('assets/leagues.json').subscribe({
-    next : (data) => {
-    this.leagues=data;
-      console.log(data)
-      
-    },
-    error: (err) => console.error(err)
-  }
-  )
+   console.log("Before HTTP");
+    this.http.get<LeagueApiResponse[]>(`${environment.apiBaseUrl}/api/players/leagues`)
+    .subscribe({
+        next: res => {
+          this.leagues = Array.isArray(res) ? res : [];
+          console.log("SUCCESS", this.leagues);
+        },
+      error: err => console.log("ERROR", err)
+    });
+
+  console.log("After HTTP");
  }
  
   submitAnswers() {
@@ -66,7 +75,7 @@ console.log(this.form.value)
   const formation=this.form.value.preferredFormation;
     this.formationService.setFormation(formation);
     console.log(formation)
-    this.router.navigate(['/scouting'])
+    this.router.navigate(['/program/squad-planning'])
   //   this.http.post('http://localhost:3000/answers', this.form.value)
   //     .subscribe({
   //       next: (res) => {

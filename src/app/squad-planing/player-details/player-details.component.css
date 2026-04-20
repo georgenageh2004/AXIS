@@ -1,58 +1,15 @@
- /* .player-details-card {
-  width: 220px;
-  padding: 15px;
-  border: 3px solid #28c76f;
-   background-color: #292828;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  margin-top: 20px;
-  font-family: Arial, sans-serif;
-}
-
-.player-header {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.player-header img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 2px solid #333;
-  margin-bottom: 10px;
-}
-
-.player-header h2 {
-  font-size: 1.2rem;
-  margin: 0;
-}
-
-.player-stats {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.player-stats li {
-  padding: 4px 0;
-  border-bottom: 1px solid #ddd;
-} */
-
-/* .player-stats li:last-child {
-  border-bottom: none;
-} */
 
 :root {
     --dark-bg: #1A2A2D;
     --medium-bg: #273D41;
-    --green-accent: #4CAF50; 
+    --green-accent: ##77d36d; 
     --light-text: #F0F0F0;
     --border-color: #3C595E;
 }
 
 .player-details-card {
-   border: 4px solid #28c76f;
-    margin-top: 20px;
+   border: 4px solid #77d36d;
+    margin-top: 10px;
     background-color: var(--medium-bg); 
     border-radius: 12px;
     padding: 10px 10px;
@@ -69,7 +26,7 @@
     font-weight: bold;
     text-align: center;
     color: white;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding-bottom: 10px;
    
     border-top: 2px solid var(--green-accent); 
@@ -114,20 +71,13 @@
     margin: 5px 0 0;
 }
 
-.flag-icon {
-  
-    width: 25px;
-    height: auto;
-    margin-top: 5px;
-    border: 1px solid #ffffff30; 
-}
 
 
 .fitness-section {
     background-color: var(--dark-bg); 
     border-radius: 8px;
     padding: 10px 15px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .fitness-label {
@@ -139,7 +89,7 @@
 
 .fitness-bar-container {
     height: 20px;
-    background-color: #28c76f; 
+    background-color: #77d36d; 
     border-radius: 10px;
     position: relative;
     overflow: hidden;
@@ -193,7 +143,7 @@
   
     font-size: 1.2em; 
     font-weight: bold;
-    color: var(--light-text);
+    color: white;
 }
 
 .pass-accuracy-value {

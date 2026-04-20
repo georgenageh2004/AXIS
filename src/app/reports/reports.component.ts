@@ -11,15 +11,15 @@ import { Router } from '@angular/router';
 export class ReportsComponent {
 private router=inject(Router)
   details_1(){
-  this.router.navigate(['/performance'])
+  this.router.navigate(['/program/performance'])
 }
   details_2(){
-   this.router.navigate(['/finance'])
+   this.router.navigate(['/program/finance'])
 }
   details_3(){
-   this.router.navigate(['/scout_report'])
+   this.router.navigate(['/program/scout_report'])
 }
   details_4(){
-   this.router.navigate(['/recomend'])
+   this.router.navigate(['/program/recomend'])
 }
 }

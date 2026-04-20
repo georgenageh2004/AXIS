@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { SideBarComponent } from '../slide_bar/side-bar/side-bar.component';
 
 @Component({
@@ -10,5 +10,25 @@ import { SideBarComponent } from '../slide_bar/side-bar/side-bar.component';
   styleUrl: './layoyt.component.css'
 })
 export class LayoytComponent {
+  private router = inject(Router);
+  isSidebarOpen = false;
+
+  get isProfileRoute(): boolean {
+    return this.router.url.startsWith('/program/profile-details/');
+  }
+
+  toggleSidebar(): void {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  closeSidebar(): void {
+    this.isSidebarOpen = false;
+  }
+
+  closeSidebarOnOverlay(): void {
+    if ((window.innerWidth <= 991 || this.isProfileRoute) && this.isSidebarOpen) {
+      this.isSidebarOpen = false;
+    }
+  }
 
 }

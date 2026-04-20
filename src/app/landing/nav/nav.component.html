@@ -1,0 +1,31 @@
+ <nav class="navbar animate-fade-in">
+        <a routerLink="/" class="logo" aria-label="Axis home" (click)="closeMenu()">
+            <img src="assets/Project logo.png" alt="AXIS logo" class="logo-img">
+        </a>
+
+        <button
+            type="button"
+            class="nav-toggle"
+            aria-label="Toggle navigation menu"
+            aria-controls="landing-nav-menu"
+            [attr.aria-expanded]="isMenuOpen"
+            (click)="toggleMenu()"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div id="landing-nav-menu" class="nav-menu" [class.open]="isMenuOpen">
+            <ul class="nav-links">
+                <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Home</a></li>
+                <li><a routerLink="/about" routerLinkActive="active" (click)="closeMenu()">About</a></li>
+                <li><a routerLink="/contact" routerLinkActive="active" (click)="closeMenu()">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <a routerLink="/login" class="login" (click)="closeMenu()">Login</a>
+                <a routerLink="/signup" class="btn btn-primary" (click)="closeMenu()">Get Started</a>
+            </div>
+        </div>
+    </nav>

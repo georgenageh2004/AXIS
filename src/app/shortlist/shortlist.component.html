@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="header-actions">
+    <h2>Short List</h2>
+    <button class="clear-btn" (click)="clearAll()" [disabled]="shortlist.length === 0">
+      <mat-icon>delete_sweep</mat-icon> Clear all
+    </button>
+  </div>
+
+  <p class="empty-msg" *ngIf="shortlist.length === 0">No players selected yet.</p>
+
+  <div class="cards-grid">
+    <div *ngFor="let player of shortlist" class="player-card">
+
+      <div class="card-top">
+        <!-- Avatar -->
+        <div class="avatar">
+          <img [src]="player.player?.image" alt="player">
+        </div>
+
+        <h3 class="name">{{ player.player?.name }}</h3>
+      </div>
+
+      <!-- Player Info -->
+      <div class="player-info">
+
+        <!-- Position + Age -->
+        <div class="player-top">
+          <p class="position">
+            Position <span>{{ player.player?.position }}</span>
+          </p>
+
+          <span class="age">
+            Age <span>{{ player.player?.age }}</span> 
+          </span>
+        </div>
+
+        <!-- Meta -->
+        <div class="meta">
+          <span>National Team: <strong>{{ player.player?.nationality}}</strong></span>
+          <span>Club: <strong>{{player.player?.club }}</strong></span>
+        </div>
+
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button class="view" type="button" (click)="viewProfile(player.playerId)">
+          <mat-icon>visibility</mat-icon>
+          View profile
+        </button>
+
+        <!-- <button class="compare">
+          <mat-icon>compare_arrows</mat-icon>
+          Compare
+        </button> -->
+
+        <button class="remove" (click)="remove(player.playerId)">
+          <mat-icon>delete</mat-icon>
+          Remove
+        </button>
+     
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -1,219 +1,342 @@
-<form [formGroup]="filtersForm" class="filters-container">
+<form [formGroup]="filtersForm" class="filters-container" (input)="onFilterInput($event)">
  
-  <!-- Position -->
-   <h6 class="head">Filters</h6>
-   <div class="search">
-  <mat-icon class="search-icon">search</mat-icon>
-  <input 
-    type="text"
-    placeholder="Search by name"
-  />
-</div>
-  <div class="filter-row">
-    <label class="filter-label">Basic Information </label>
-    <select formControlName="position">
-      <option value="">Select Position</option>
-      <option value="attacker">Attacker</option>
-      <option value="midfielder">Midfielder</option>
-      <option value="defender">Defender</option>
-      <option value="goalkeeper">Goalkeeper</option>
-    </select>
+  <h6 class="head">Filters</h6>
+  <div class="search">
+    <mat-icon class="search-icon">search</mat-icon>
+    <input 
+      type="text"
+      placeholder="Search by name"
+      formControlName="name"
+      (keyup.enter)="applyFilters()"
+    />
   </div>
 
-  <select formControlName="league">
-      <option value="">Select league</option>
-      @for (league of leagues; track league.id) {
-        <option [value]="league.name">{{league.name}}</option>
-      }
-      
-     
-      
-    </select>
-    <select formControlName="nationality">
-      <option value="">Select nationality</option>
-      @for (nationality of nationality; track nationality.id) {
-        <option [value]="nationality.name">{{nationality.name}}</option>
-      }
-      
-     
-      
-    </select>
-    <select formControlName="clubs">
-      <option value="">Select club </option>
-      @for (club of filteredClubs; track club.id) {
-        <option [value]="club.name">{{club.name}}</option>
-      }
-      
-     
-      
-    </select>
-    <div class="filter-row">
-    <label class="filter-label">Age</label>
+  <div class="filter-row">
+    <label class="filter-label">Basic Information </label>
+    <app-custom-dropdown
+      formControlName="position"
+      [options]="positionOptions"
+      placeholder="Select Position"
+      ariaLabel="Select position"
+    ></app-custom-dropdown>
+  </div>
 
+  <div class="filter-row">
+    <label class="filter-label">League</label>
+    <app-custom-dropdown
+      formControlName="league"
+      [options]="leagueOptions"
+      placeholder="Select league"
+      ariaLabel="Select league"
+    ></app-custom-dropdown>
+  </div>
+
+  <div class="filter-row">
+    <label class="filter-label">Nationality</label>
+    <app-custom-dropdown
+      formControlName="nationality"
+      [options]="nationalityOptions"
+      placeholder="Select nationality"
+      ariaLabel="Select nationality"
+    ></app-custom-dropdown>
+  </div>
+
+  <div class="filter-row">
+    <label class="filter-label">Club</label>
+    <app-custom-dropdown
+      formControlName="clubs"
+      [options]="clubOptions"
+      placeholder="Select club"
+      ariaLabel="Select club"
+    ></app-custom-dropdown>
+  </div>
+
+  <div class="filter-row">
+    <label class="filter-label">Age</label>
     <div class="filter-inputs">
       <input class="min" type="number" formControlName="ageMin" placeholder="Min">
       <input class="max" type="number" formControlName="ageMax" placeholder="Max">
     </div>
   </div>
 
-       <label class="attack_section">Attacking statues : </label>
-  <!--  Goals scored -->
-  <div class="filter-row">
-    <label class="filter-label"> Goals Scored </label>
+  <label class="attack_section">Playing Time : </label>
 
+  <div class="filter-row">
+    <label class="filter-label">MP</label>
     <div class="filter-inputs">
-      <input class="min" type="number" formControlName="GoalsScoredMin" placeholder="Min">
-      <input class="max" type="number" formControlName="GoalsScoredMax" placeholder="Max">
+      <input class="min" type="number" formControlName="MP" placeholder="Value">
     </div>
   </div>
 
-  <!-- assist -->
   <div class="filter-row">
-    <label class="filter-label"> Assits Provided</label>
-
+    <label class="filter-label">Starts</label>
     <div class="filter-inputs">
-      <input class="min" type="number" formControlName="AssitsProvidedMin" placeholder="Min">
-      <input  class="max" type="number" formControlName="AssitsProvidedMax" placeholder="Max">
+      <input class="min" type="number" formControlName="Starts" placeholder="Value">
     </div>
   </div>
 
-  <!-- ExpectedGoals-->
+  <div class="filter-row">
+    <label class="filter-label">Minutes</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="Minutes" placeholder="Value">
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <label class="filter-label">90s</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="Minutes90s" placeholder="Value">
+    </div>
+  </div>
+
+  <label class="attack_section">Attacking statues : </label>
+
+  <div class="filter-row">
+    <label class="filter-label">Goals Scored</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="GoalsScored" placeholder="Value">
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <label class="filter-label">Assits Provided</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="AssitsProvided" placeholder="Value">
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <label class="filter-label">Goals + Assists</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="GPlusA" placeholder="Value">
+    </div>
+  </div>
+
   <div class="filter-row">
     <label class="filter-label">Expected Goals (XG)</label>
-
     <div class="filter-inputs">
-      <input class="min" type="number" formControlName="ExpectedGoalsMin" placeholder="Min">
-      <input class="max" type="number" formControlName="ExpectedGoalsMax" placeholder="Max">
+      <input class="min" type="number" formControlName="ExpectedGoals" placeholder="Value">
     </div>
   </div>
 
-  <!-- ExpectedAssistes -->
   <div class="filter-row">
-    <label class="filter-label"> Expected Assistes (XAG)</label>
-
+    <label class="filter-label">Expected Assistes (XAG)</label>
     <div class="filter-inputs">
-      <input class="min" type="number" formControlName="ExpectedAssistesMin" placeholder="Min">
-      <input class="max" type="number" formControlName="ExpectedAssistesMax" placeholder="Max">
+      <input class="min" type="number" formControlName="ExpectedAssistes" placeholder="Value">
     </div>
   </div>
-<!-- Defensive Stats -->
-<label class="attack_section">Defensive Stats : </label>
+
   <div class="filter-row">
-    <label class="filter-label"> Total Tackels </label>
-
+    <label class="filter-label">NPxG</label>
     <div class="filter-inputs">
-      <input class="min" type="number" formControlName="TotalTackelsMin" placeholder="Min">
-      <input class="max" type="number" formControlName="TotalTackelsMax" placeholder="Max">
+      <input class="min" type="number" formControlName="NpxG" placeholder="Value">
     </div>
   </div>
+
   <div class="filter-row">
-    <label class="filter-label"> Blocks Made</label>
-
+    <label class="filter-label">G-PK</label>
     <div class="filter-inputs">
-      <input class="min" type="number" formControlName="BlocksMadeMin" placeholder="Min">
-      <input class="max" type="number" formControlName="BlocksMadeMax" placeholder="Max">
+      <input class="min" type="number" formControlName="GMinusPK" placeholder="Value">
     </div>
   </div>
+
+  <label class="attack_section">Defensive Stats : </label>
+
   <div class="filter-row">
-    <label class="filter-label"> Interceptions</label>
-
+    <label class="filter-label">Total Tackels</label>
     <div class="filter-inputs">
-      <input class="min" type="number" formControlName="InterceptionsMin" placeholder="Min">
-      <input class="max" type="number" formControlName="InterceptionsMax" placeholder="Max">
+      <input class="min" type="number" formControlName="TotalTackels" placeholder="Value">
     </div>
   </div>
+
   <div class="filter-row">
-    <label class="filter-label"> Clearances</label>
-
+    <label class="filter-label">Tackles Won</label>
     <div class="filter-inputs">
-      <input class="min" type="number" formControlName="ClearancesMin" placeholder="Min">
-      <input class="max" type="number" formControlName="ClearancesMax" placeholder="Max">
+      <input class="min" type="number" formControlName="TklW" placeholder="Value">
     </div>
   </div>
 
-  <!-- Passing &Creativity Stats -->
-<label class="attack_section">Passing &Creativity Stats : </label>
   <div class="filter-row">
-    <label class="filter-label"> Progressive passes </label>
-
+    <label class="filter-label">Blocks Made</label>
     <div class="filter-inputs">
-      <input class="min" type="number" formControlName="ProgressivepassesMin" placeholder="Min">
-      <input class="max" type="number" formControlName="ProgressivepassesMax" placeholder="Max">
+      <input class="min" type="number" formControlName="BlocksMade" placeholder="Value">
     </div>
   </div>
+
   <div class="filter-row">
-    <label class="filter-label"> Key Passes </label>
-
+    <label class="filter-label">Interceptions</label>
     <div class="filter-inputs">
-      <input class="min" type="number" formControlName="KeyPassesMin" placeholder="Min">
-      <input class="max" type="number" formControlName="KeyPassesMax" placeholder="Max">
+      <input class="min" type="number" formControlName="Interceptions" placeholder="Value">
     </div>
   </div>
+
   <div class="filter-row">
-    <label class="filter-label"> Passes Into the Penalty Area </label>
-
+    <label class="filter-label">Tackle + Interception</label>
     <div class="filter-inputs">
-      <input class="min" type="number" formControlName="PassesIntothePenaltyAreaMin" placeholder="Min">
-      <input class="max" type="number" formControlName="PassesIntothePenaltyAreaMax" placeholder="Max">
+      <input class="min" type="number" formControlName="TklInt" placeholder="Value">
     </div>
   </div>
 
-
-   <!-- Goalkeeping stats -->
-<label class="attack_section">Goalkeeping stats : </label>
   <div class="filter-row">
-    <label class="filter-label"> Saves Made </label>
-
+    <label class="filter-label">Clearances</label>
     <div class="filter-inputs">
-      <input class="min" type="number" formControlName="SavesMadeMin" placeholder="Min">
-      <input class="max" type="number" formControlName="SavesMadeMax" placeholder="Max">
+      <input class="min" type="number" formControlName="Clearances" placeholder="Value">
     </div>
   </div>
+
   <div class="filter-row">
-    <label class="filter-label"> Clean Sheets</label>
-
+    <label class="filter-label">Errors</label>
     <div class="filter-inputs">
-      <input class="min" type="number" formControlName="CleanSheatesMin" placeholder="Min">
-      <input class="max" type="number" formControlName="CleanSheatesMax" placeholder="Max">
+      <input class="min" type="number" formControlName="Errors" placeholder="Value">
     </div>
   </div>
+
+  <label class="attack_section">Passing &Creativity Stats : </label>
+
   <div class="filter-row">
-    <label class="filter-label"> Penalty Saved </label>
-
+    <label class="filter-label">Progressive passes</label>
     <div class="filter-inputs">
-      <input class="min" type="number" formControlName="penaltySavedMin" placeholder="Min">
-      <input class="max" type="number" formControlName="penaltySavedMax" placeholder="Max">
+      <input class="min" type="number" formControlName="Progressivepasses" placeholder="Value">
     </div>
   </div>
 
-<!--Possession  & Ball Control -->
-<label class="attack_section">Possession & Ball Control : </label>
   <div class="filter-row">
-    <label class="filter-label"> Touches </label>
-
+    <label class="filter-label">Progressive Carries</label>
     <div class="filter-inputs">
-      <input class="min" type="number" formControlName="TouchesMin" placeholder="Min">
-      <input class="max" type="number" formControlName="TouchesMax" placeholder="Max">
+      <input class="min" type="number" formControlName="ProgCarries" placeholder="Value">
     </div>
   </div>
+
   <div class="filter-row">
-    <label class="filter-label"> Carries </label>
-
+    <label class="filter-label">Key Passes</label>
     <div class="filter-inputs">
-      <input class="min" type="number" formControlName="CarriesMin" placeholder="Min">
-      <input class="max" type="number" formControlName="CarriesMax" placeholder="Max">
+      <input class="min" type="number" formControlName="KeyPasses" placeholder="Value">
     </div>
   </div>
 
+  <div class="filter-row">
+    <label class="filter-label">Passes Into the Penalty Area</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="PassesIntothePenaltyArea" placeholder="Value">
+    </div>
+  </div>
 
+  <div class="filter-row">
+    <label class="filter-label">Touches</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="Touches" placeholder="Value">
+    </div>
+  </div>
 
-  <!-- Button -->
+  <div class="filter-row">
+    <label class="filter-label">Carries</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="Carries" placeholder="Value">
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <label class="filter-label">Progressive Runs Received</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="ProgRunsRec" placeholder="Value">
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <label class="filter-label">Miscontrols</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="Miscontrols" placeholder="Value">
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <label class="filter-label">Dispossessed</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="Dispossessed" placeholder="Value">
+    </div>
+  </div>
+
+  <label class="attack_section">Goalkeeping stats : </label>
+
+  <div class="filter-row">
+    <label class="filter-label">Goals Against</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="GA" placeholder="Value">
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <label class="filter-label">Saves Made</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="SavesMade" placeholder="Value">
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <label class="filter-label">Save %</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="SavePct" placeholder="Value">
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <label class="filter-label">Clean Sheets</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="CleanSheates" placeholder="Value">
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <label class="filter-label">Clean Sheet %</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="CSPct" placeholder="Value">
+    </div>
+  </div>
+
+  <label class="attack_section">Misc : </label>
+
+  <div class="filter-row">
+    <label class="filter-label">Yellow Cards</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="YellowCards" placeholder="Value">
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <label class="filter-label">Red Cards</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="RedCards" placeholder="Value">
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <label class="filter-label">PK Won</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="PKWon" placeholder="Value">
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <label class="filter-label">PK Conceded</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="PKCon" placeholder="Value">
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <label class="filter-label">Recoveries</label>
+    <div class="filter-inputs">
+      <input class="min" type="number" formControlName="Recoveries" placeholder="Value">
+    </div>
+  </div>
+
   <div class="filter-submit">
     @if(Possinvalid){
-      <button class="submit"  [disabled]="filtersForm.invalid"      type="button" (click)="applyFilters()">Apply Filters</button>
-      <h5>*plese select a position</h5>
-    }@else {<button type="button" (click)="applyFilters()">Apply Filters</button>}
-    
+      <button class="submit" [disabled]="Possinvalid" type="button" (click)="applyFilters()">Apply Filters</button>
+      <h5>*please select a position or enter player name</h5>
+    }@else {
+      <button type="button" (click)="applyFilters()">Apply Filters</button>
+    }
   </div>
 
 </form>

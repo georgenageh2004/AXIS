@@ -1,4 +1,4 @@
 <div class="scout">
-<app-filters></app-filters>
-<app-palyers-scout></app-palyers-scout>
+<app-filters (filtersApplied)="onFiltersApplied($event)"></app-filters>
+<app-palyers-scout [activeFilterQuery]="activeFilterQuery"></app-palyers-scout>
 </div>

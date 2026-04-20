@@ -12,10 +12,18 @@ import { Player } from '../../Models/players';
 })
 export class SquadListComponent {
  @Input() players: Player[] = [];
+ @Input() formationPlayers: Player[] = [];
  @Output() replacementSelected = new EventEmitter<Player>();
 
 selectReplacement(player: Player) {
+  if (this.isInFormation(player)) {
+    return;
+  }
   this.replacementSelected.emit(player);
+}
+
+isInFormation(player: Player): boolean {
+  return this.formationPlayers.some(p => p.id === player.id);
 }
 
 }

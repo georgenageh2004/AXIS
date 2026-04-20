@@ -22,11 +22,11 @@
       </div>
 
       <div class="select-options" *ngIf="isOpen">
-        @for (league of leagues; track league.id) {
+        @for (league of leagues; track league.leagueId) {
           <div 
             class="select-option"
-            (click)="selectLeague(league.name)">
-            {{league.name}}
+            (click)="selectLeague(league.leagueName)">
+            {{league.leagueName}}
           </div>
         }
       </div>

@@ -1,0 +1,278 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: #0f1115;
+  color: #ffffff;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.dashboard-container {
+  max-width: 1010px;
+  margin: 0 auto;
+}
+
+/* Header */
+.main-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.main-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.text-primary { color: #6ddc6d; }
+.text-danger { color: #ff6b6b; }
+.text-blue { color: #4da6ff; }
+.text-muted { color: #bfbfbf; }
+
+/* Top Summary */
+.top-summary {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background-color: transparent;
+  border: 2px solid #6ddc6d;
+  border-radius: 16px;
+  padding: 1.5rem 3rem;
+  text-align: center;
+  min-width: 250px;
+}
+
+.summary-card h2 {
+  font-size: 2.5rem;
+  color: #6ddc6d;
+  margin-bottom: 0.25rem;
+  font-weight: 800;
+}
+
+.summary-card p {
+  color: #bfbfbf;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+/* Grid Layout */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.col-span-2 { grid-column: span 2; }
+.col-span-1-5 { grid-column: span 1; }
+
+/* Cards */
+.card {
+  background-color: #1e1e1e;
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid #B3FF001A;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.header-title {
+  color: #bfbfbf;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.primary-dot {
+  background-color: #6ddc6d;
+}
+
+.stat-highlight {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+/* Inner Cards */
+.inner-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+.inner-card {
+    margin-bottom: 10px;
+  background-color: #292828;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.label {
+  color: #bfbfbf;
+  font-size: 0.7rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.value {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.value-small {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Player */
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.player-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #292828;
+  border: 2px solid #6ddc6d;
+}
+
+.player-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.player-role {
+  color: #bfbfbf;
+  font-size: 0.85rem;
+}
+
+/* Rows */
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #333;
+}
+
+.stat-row:last-child {
+  border-bottom: none;
+}
+
+/* Discipline */
+.discipline-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.card-icon {
+  width: 30px;
+  height: 40px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.yellow-card {
+  background-color: #f1c40f;
+  color: #000;
+}
+
+.red-card {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.player-name-small {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* Extra */
+.mt-4 { margin-top: 30px; }
+
+.badge {
+  background-color: rgba(109, 220, 109, 0.1);
+  color: #6ddc6d;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.border-left-primary {
+  border-left: 2px solid #6ddc6d;
+  border-radius: 0 8px 8px 0;
+}
+
+.icon-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #6ddc6d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .col-span-2 {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .col-span-2 {
+    grid-column: span 1;
+  }
+  .grid-4,
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .top-summary {
+    flex-direction: column;
+  }
+}

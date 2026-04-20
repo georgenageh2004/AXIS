@@ -1,22 +1,24 @@
 <div class="container">
 <div class="plan">
-  <div class="pitch">
+  <div class="pitch" #pitchBoundary>
     <img class="pitch-bg" src="assets/pitch1.png" alt="football pitch">
   
     <!-- Players rendered on top of the pitch -->
   <div
   class="player"
-  *ngFor="let p of pitchPlayers"
+  *ngFor="let p of pitchPlayers; let i = index"
   cdkDrag
-  [cdkDragBoundary]="'.pitch'"
-  (cdkDragStarted)="onDragStart()"
+  [cdkDragBoundary]="pitchBoundary"
+  [cdkDragFreeDragPosition]="getPlayerDragPosition(p.id)"
+  (cdkDragStarted)="onDragStart($event)"
   (cdkDragEnded)="onDragEnd($event, p)"
-  (click)="!isDragging && selectPlayer(p)"
-  [style.transform]="'translate(' + playerPositionsPx[p.id]?.x + 'px,' + playerPositionsPx[p.id]?.y + 'px)'"
+  (click)="onPlayerClick(p)"
+  [style.left]="'calc(' + (currentFormation[i]?.x ?? 0) + '% - 30.5px)'"
+  [style.top]="'calc(' + (currentFormation[i]?.y ?? 0) + '% - 29.5px)'"
 >
       <img class="player-img" [src]="p.image" [alt]="p.name">
       <div class="underplayer">
-      <mat-icon class="change-btn" (click)="changingPlayer = p">change_circle</mat-icon>
+      <mat-icon class="change-btn" (click)="$event.stopPropagation(); changingPlayer = p">change_circle</mat-icon>
       
      <h2 class="player-name">{{ p.name }}</h2>
        </div>
@@ -28,6 +30,7 @@
 </div>
 <app-squad-list 
   [players]="playersList" 
+  [formationPlayers]="pitchPlayers"
   (replacementSelected)="replacePlayer($event)">
 </app-squad-list>
 

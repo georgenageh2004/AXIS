@@ -1,33 +1,32 @@
-
 <div class="squad-table-card">
-    <p class="squad-list-title">SQUAD LIST</p>
-    
-    <div class="squad-scroll-container">
-        <table class="squad-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Age</th>
-                    <th>Pass Accuracy</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let player of players">
-                    <td>{{ player.name }}</td>
-                    <td>{{ player.position }}</td>
-                    <td>{{ player.age }}</td>
-                    <td>{{ player.passAccuracy }}%</td>
-                    <td [class.injured]="player.isInjured" [class.active]="!player.isInjured">
-                        {{ player.isInjured ? 'Injured' : 'Active' }}
-                    </td>
-                     <td>
-                     <button (click)="selectReplacement(player)">Select</button>
-                      </td>
-                </tr>
-            </tbody>
-        </table>
-        </div>
+  <p class="squad-list-title">SQUAD LIST</p>
 
+  <div class="squad-rows">
+    <div class="squad-header">
+      <div>Player</div>
+      <div>Position</div>
+      <div>Age</div>
+      <div>Nationality</div>
+      <div>Matches</div>
+      <div>Change</div>
+    </div>
+
+    <div class="squad-row" *ngFor="let player of players">
+      <div class="player-cell">
+        <img [src]="player.image" [alt]="player.name" class="player-image">
+        <span>{{ player.name }}</span>
+      </div>
+      <div ><span class="pos">{{ player.position }}</span></div>
+      <div>{{ player.age }}</div>
+      <div>{{ player.nationality }}</div>
+      <div>{{ player.matchesPlayed }}</div>
+      <div>
+        <button
+          (click)="selectReplacement(player)"
+          [disabled]="isInFormation(player)">
+          {{ isInFormation(player) ? 'Selected' : 'Select' }}
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

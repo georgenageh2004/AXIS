@@ -38,8 +38,13 @@
   text-align: center;
   cursor: grab; /* يظهر اليد المفتوحة */
   will-change: transform; /* smooth drag */
-    transition: none; /* smooth Drag يعتمد على GPU */
-  transform: none;  /* مهم جدًا */
+  transition: transform 60ms linear;
+  touch-action: none;
+}
+
+.player.cdk-drag-dragging {
+  cursor: grabbing;
+  transition: none;
 }
 
 /* صورة اللاعب */

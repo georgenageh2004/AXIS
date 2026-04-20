@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -7,7 +7,7 @@ import { PlayerDetailsComponent } from "../player-details/player-details.compone
 import { SquadListComponent } from "../squad-list/squad-list.component";
 import { MatIcon } from "@angular/material/icon";
 import { FormationService } from '../../services/formation.service';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CdkDragEnd, CdkDragStart, DragDropModule } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-squad-pitch',
   standalone: true,
@@ -21,8 +21,11 @@ export class SquadPitchComponent implements OnInit {
   selectedPlayer?: Player;      // للـ PlayerDetails
   changingPlayer?: Player;   
   selectedFormation!: string; 
-    isDragging = false;
-  playerPositionsPx: { [playerId: number]: { x: number; y: number } } = {};
+  // Free-drag offsets (in px) stored internally only (not in Player / backend)
+  private readonly zeroDragPosition = { x: 0, y: 0 };
+  playerDragPositionsPx: { [playerId: number]: { x: number; y: number } } = {};
+
+  private suppressClickUntilMs = 0;
 
 currentFormation: any[] = [];
   constructor(private http: HttpClient) {}
@@ -56,38 +59,38 @@ buildPitchPlayers() {
     );
     if (player) {
       this.pitchPlayers.push(player);
-
-      // نحسب px من الـ % الأولية
-      const pitch = document.querySelector('.pitch') as HTMLElement;
-      const pxX = (pos.x / 100) * pitch.clientWidth;
-      const pxY = (pos.y / 100) * pitch.clientHeight;
-
-      this.playerPositionsPx[player.id] = { x: pxX, y: pxY };
+      // When (re)building the pitch players, start them at the formation anchor
+      // with zero drag offset.
+      delete this.playerDragPositionsPx[player.id];
     }
   });
 }
 
+getPlayerDragPosition(playerId: number): { x: number; y: number } {
+  return this.playerDragPositionsPx[playerId] ?? this.zeroDragPosition;
+}
+
 // drag started
-onDragStart() {
-  this.isDragging = true;
+onDragStart(_event: CdkDragStart) {
+  // suppress click that may fire on pointerup after dragging
+  this.suppressClickUntilMs = Date.now() + 200;
 }
 
 // drag ended
-onDragEnd(event: any, player: any) {
-  this.isDragging = false;
-
-  // نحفظ مكان اللاعب بالـ px فقط
+onDragEnd(event: CdkDragEnd, player: Player) {
+  // store free-drag offset in px (internal only)
   const pos = event.source.getFreeDragPosition();
+  this.playerDragPositionsPx[player.id] = {
+    x: Math.round(pos.x),
+    y: Math.round(pos.y)
+  };
 
-  const pitch = document.querySelector('.pitch') as HTMLElement;
+  this.suppressClickUntilMs = Date.now() + 200;
+}
 
-  // clamp داخل الملعب
-  const x = Math.max(0, Math.min(pos.x, pitch.clientWidth - 61)); // 61 px عرض اللاعب
-  const y = Math.max(0, Math.min(pos.y, pitch.clientHeight - 59)); // 59 px ارتفاع اللاعب
-
-  this.playerPositionsPx[player.id] = { x, y };
-
-  // لا reset
+onPlayerClick(player: Player) {
+  if (Date.now() < this.suppressClickUntilMs) return;
+  this.selectPlayer(player);
 }
   // استبدال اللاعب
   replacePlayer(newPlayer: Player) {
@@ -100,7 +103,15 @@ onDragEnd(event: any, player: any) {
 
     const index = this.pitchPlayers.findIndex(p => p === this.changingPlayer);
     if (index !== -1) {
+      // Reset drag positions when a slot is replaced
+      delete this.playerDragPositionsPx[this.changingPlayer.id];
+      delete this.playerDragPositionsPx[newPlayer.id];
+
       this.pitchPlayers[index] = newPlayer;
+
+      if (this.selectedPlayer === this.changingPlayer) {
+        this.selectedPlayer = newPlayer;
+      }
     }
 
     this.changingPlayer = undefined;

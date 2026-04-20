@@ -1,7 +1,22 @@
-<apx-chart
-  #chart
-  [series]="chartOptions.series"
-  [chart]="chartOptions.chart"
-  
-  [xaxis]="chartOptions.xaxis">
-</apx-chart>
+<div class="radar-shell">
+  @if (isLoading) {
+    <div class="radar-state">Loading technical stats...</div>
+  } @else if (errorMessage) {
+    <div class="radar-state error">{{ errorMessage }}</div>
+  } @else {
+    <apx-chart
+      #chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [xaxis]="chartOptions.xaxis"
+      [yaxis]="chartOptions.yaxis"
+      [dataLabels]="chartOptions.dataLabels"
+      [stroke]="chartOptions.stroke"
+      [fill]="chartOptions.fill"
+      [markers]="chartOptions.markers"
+      [plotOptions]="chartOptions.plotOptions"
+      [colors]="chartOptions.colors"
+      [tooltip]="chartOptions.tooltip">
+    </apx-chart>
+  }
+</div>

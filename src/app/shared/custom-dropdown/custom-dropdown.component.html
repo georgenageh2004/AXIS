@@ -1,0 +1,41 @@
+<div class="custom-dropdown" [class.open]="isOpen" [class.disabled]="isDisabled">
+  <div
+    class="dropdown-trigger"
+    role="combobox"
+    aria-haspopup="listbox"
+    [attr.aria-label]="ariaLabel"
+    [attr.aria-expanded]="isOpen"
+    [attr.aria-controls]="dropdownId"
+    [attr.aria-activedescendant]="activeDescendantId"
+    [attr.aria-disabled]="isDisabled"
+    tabindex="0"
+    (click)="toggleDropdown()"
+    (keydown)="onTriggerKeydown($event)"
+  >
+    <span class="trigger-value" [class.placeholder]="!selectedLabel">
+      {{ selectedLabel || placeholder }}
+    </span>
+    <span class="trigger-icon" aria-hidden="true"></span>
+  </div>
+
+  <div class="dropdown-list" role="listbox" [id]="dropdownId" [class.open]="isOpen">
+    <button
+      type="button"
+      class="dropdown-option"
+      *ngFor="let option of options; let i = index; trackBy: trackByValue"
+      role="option"
+      [id]="optionId(i)"
+      [class.selected]="isSelected(option)"
+      [class.active]="activeIndex === i"
+      [attr.aria-selected]="isSelected(option)"
+      (mouseenter)="activeIndex = i"
+      (click)="selectOption(option)"
+    >
+      {{ option.label }}
+    </button>
+
+    <div class="dropdown-empty" *ngIf="options.length === 0">
+      {{ emptyStateText }}
+    </div>
+  </div>
+</div>

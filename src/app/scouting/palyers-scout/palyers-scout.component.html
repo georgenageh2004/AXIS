@@ -1,10 +1,29 @@
 <div class="container">
+  <div class="toolbar">
+    <div class="paging-meta">Page {{ currentPage }} of {{ totalPages }}</div>
+    <div class="paging-actions">
+      <button type="button" (click)="previousPage()" [disabled]="!hasPreviousPage || isLoading">Prev</button>
+      <button type="button" (click)="nextPage()" [disabled]="!hasNextPage || isLoading">Next</button>
+    </div>
+  </div>
+
+  @if (errorMessage) {
+    <div class="state-message error">{{ errorMessage }}</div>
+  }
+
+  @if (isLoading) {
+    <div class="state-message">Loading players...</div>
+  } @else {
   @for (player of players; track player.id) {
     <div class="player-card">
 
       <!-- Avatar -->
       <div class="avatar">
-        <img [src]="player.image" alt="player">
+        @if (player.image) {
+          <img [src]="player.image" alt="player" (error)="onImageError(player)">
+        } @else {
+          <span class="avatar-fallback">{{ player.name.charAt(0) }}</span>
+        }
       </div>
 
       <!-- Player Info -->
@@ -19,13 +38,13 @@
           </p>
 
           <span class="age">
-            Age {{ player.age }}
+            Age <span class="age-value">{{ player.age }}</span>
           </span>
         </div>
 
         <!-- Meta -->
         <div class="meta">
-          <span>National Team: <strong>{{ player.nationalteam }}</strong></span>
+          <span>Nationality: <strong>{{ player.nationality || 'N/A' }}</strong></span>
           <span>Club: <strong>{{ player.club }}</strong></span>
         </div>
 
@@ -33,16 +52,21 @@
 
       <!-- Actions -->
       <div class="actions">
-        <button class="view">
+        <button class="view" type="button" (click)="viewProfile(player)">
           <mat-icon>visibility</mat-icon>
           View profile
         </button>
 
-        <button class="add">
-          <mat-icon>add</mat-icon>
-        </button>
+        
+      <button class="add" (click)="toggle(player)">
+        <mat-icon>{{ shortlistIds.has(player.id) ? 'remove' : 'add' }}</mat-icon>
+        <!-- {{ shortlistIds.has(player.id) ? 'Remove from Shortlist' : 'Add to Shortlist' }} -->
+      </button>
       </div>
 
     </div>
+  } @empty {
+    <div class="state-message">No players found for this page.</div>
+  }
   }
 </div>

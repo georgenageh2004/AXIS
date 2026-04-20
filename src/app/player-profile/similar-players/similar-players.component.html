@@ -1,0 +1,58 @@
+<div class="similar">
+  <div class="similar_header">
+    <div class="similar_head">
+      <h3>Similar Players</h3>
+      <p>Swipe through closely matching players.</p>
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <div class="similar_state">Loading similar players...</div>
+  } @else if (errorMessage) {
+    <div class="similar_state error">{{ errorMessage }}</div>
+  } @else if (players.length === 0) {
+    <div class="similar_state">No similar players found.</div>
+  } @else {
+    <div class="carousel_shell">
+      <button type="button" class="carousel_arrow left" (click)="previousSlide()" aria-label="Previous similar player">
+        <span>‹</span>
+      </button>
+
+      <swiper-container
+        #swiperEl
+        class="similar_swiper"
+        slides-per-view="auto"
+        space-between="16"
+        watch-overflow="true"
+        grab-cursor="true"
+        centered-slides="false"
+        loop="false">
+        @for (player of players; track player.id) {
+          <swiper-slide class="similar_slide">
+            <div class="similar_card" (click)="viewProfile(player.id)">
+              <div class="score_chip">{{ getScoreLabel(player.similarityScore) }}%</div>
+
+              <div class="sim_img">
+                <img [src]="player.image" [alt]="player.name">
+              </div>
+
+              <div class="sim_info">
+                <h4 class="sim_name">{{ player.name }}</h4>
+                <p class="sim_club">{{ player.club }}</p>
+                <p class="sim_position">{{ player.position }} • {{ player.nationality }}</p>
+
+                <div class="score_bar">
+                  <div class="score_fill" [style.width.%]="getScoreFill(player.similarityScore)"></div>
+                </div>
+              </div>
+            </div>
+          </swiper-slide>
+        }
+      </swiper-container>
+
+      <button type="button" class="carousel_arrow right" (click)="nextSlide()" aria-label="Next similar player">
+        <span>›</span>
+      </button>
+    </div>
+  }
+</div>

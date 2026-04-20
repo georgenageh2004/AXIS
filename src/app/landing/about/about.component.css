@@ -1,0 +1,622 @@
+/* الإعدادات الأساسية */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+:host {
+    display: block;
+    background-color: #0b0d0c;
+    color: #ffffff;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+/* الألوان والنصوص المشتركة */
+.text-green { color: #5bf479 !important; }
+.text-dark { color: #0b0d0c !important; }
+
+/* الأنيميشن المتسلسل */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-fade-in { animation: fadeIn 1s ease-out forwards; }
+.animate-slide-up { opacity: 0; animation: fadeInUp 0.8s ease-out forwards; }
+.animate-slide-up-delay-1 { opacity: 0; animation: fadeInUp 0.8s ease-out 0.2s forwards; }
+.animate-slide-up-delay-2 { opacity: 0; animation: fadeInUp 0.8s ease-out 0.4s forwards; }
+.animate-slide-up-delay-3 { opacity: 0; animation: fadeInUp 0.8s ease-out 0.6s forwards; }
+.animate-fade-in-delay-4 { opacity: 0; animation: fadeIn 1s ease-out 0.8s forwards; }
+
+/* الأزرار */
+.btn {
+    display: inline-block;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #5bf479;
+    color: #0b0d0c;
+}
+
+.btn-primary:hover {
+    background-color: #4ade65;
+}
+
+/* شريط التنقل */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background-color: #0b0d0c;
+    border-bottom: 1px solid #1a1f1c;
+    position: relative;
+    z-index: 10;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: #9ca3af;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: #ffffff;
+}
+
+.nav-links a.active {
+    border-bottom: 2px solid #5bf479;
+    padding-bottom: 5px;
+}
+
+/* قسم الهيرو (About Axis) */
+.about-hero {
+    text-align: center;
+    padding: 120px 5% 100px;
+    position: relative;
+}
+
+/* تأثير إضاءة الملعب في الخلفية */
+.stadium-lights {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at top center, rgba(255,255,255,0.05) 0%, rgba(11,13,12,1) 70%);
+    z-index: -1;
+}
+
+.stadium-lights::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 10%, rgba(255,255,255,0.03) 1px, transparent 2px),
+        radial-gradient(circle at 80% 10%, rgba(255,255,255,0.03) 1px, transparent 2px);
+    background-size: 50px 50px;
+}
+
+.about-hero .subtitle {
+    color: #5bf479;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.about-hero h1 {
+    font-size: 64px;
+    font-weight: 800;
+    margin-bottom: 25px;
+    letter-spacing: -2px;
+}
+
+.about-hero p {
+    color: #9ca3af;
+    max-width: 650px;
+    margin: 0 auto;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+/* قسم المهمة والرؤية */
+.mission-vision {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    padding: 0 5% 100px;
+}
+
+.mv-card {
+    border-radius: 12px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.dark-card {
+    background-color: #151916;
+    border: 1px solid #232a25;
+}
+
+.green-card {
+    background-color: #5bf479;
+}
+
+.card-icon {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.mv-card h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+}
+
+.mv-card p {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    flex-grow: 1;
+}
+
+.dark-card p { color: #9ca3af; }
+
+.tags {
+    display: flex;
+    gap: 15px;
+}
+
+.tag {
+    background-color: #1a1e1b;
+    border: 1px solid #232a25;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bg-watermark {
+    position: absolute;
+    bottom: -40px;
+    right: -40px;
+    font-size: 250px;
+    color: rgba(255, 255, 255, 0.02);
+    transform: rotate(-15deg);
+    pointer-events: none;
+}
+
+.card-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #0b0d0c;
+}
+
+/* قسم المنصة */
+.platform-section {
+    display: flex;
+    align-items: center;
+    padding: 80px 5%;
+    gap: 60px;
+    background-color: #111412;
+    border-top: 1px solid #1a1f1c;
+    border-bottom: 1px solid #1a1f1c;
+}
+
+.platform-content {
+    flex: 1;
+}
+
+.platform-content .subtitle {
+    color: #5bf479;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.platform-content h2 {
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 25px;
+    letter-spacing: -1px;
+}
+
+.platform-content .desc {
+    color: #9ca3af;
+    font-size: 16px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+}
+
+.feature-item {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.icon-wrap {
+    color: #5bf479;
+    font-size: 18px;
+    margin-top: 3px;
+}
+
+.text-wrap h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.text-wrap p {
+    color: #9ca3af;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* تصميم شاشة الكمبيوتر والملعب (CSS Art) */
+.platform-visual {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.glow-effect {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(91,244,121,0.15) 0%, rgba(17,20,18,0) 70%);
+    z-index: 0;
+}
+
+.monitor-setup {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.monitor {
+    width: 450px;
+    height: 280px;
+    background-color: #2a2a2a;
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    border: 1px solid #3a3a3a;
+}
+
+.screen {
+    width: 100%;
+    height: 100%;
+    background-color: #0b0d0c;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.dashboard-ui {
+    display: flex;
+    height: 100%;
+}
+
+.sidebar {
+    width: 60px;
+    background-color: #151916;
+    border-right: 1px solid #232a25;
+}
+
+.main-view {
+    flex: 1;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0f1311;
+}
+
+/* الملعب */
+.pitch {
+    width: 100%;
+    height: 100%;
+    background-color: #2b4a31;
+    border: 2px solid rgba(255,255,255,0.2);
+    position: relative;
+    border-radius: 4px;
+}
+
+.center-line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    background-color: rgba(255,255,255,0.2);
+    transform: translateX(-50%);
+}
+
+.center-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.penalty-box {
+    position: absolute;
+    top: 50%;
+    height: 80px;
+    width: 40px;
+    border: 2px solid rgba(255,255,255,0.2);
+    transform: translateY(-50%);
+}
+
+.penalty-box.left { left: 0; border-left: none; }
+.penalty-box.right { right: 0; border-right: none; }
+
+/* نقاط الـ Heatmap */
+.dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: #ff3b30;
+    border-radius: 50%;
+    filter: blur(4px);
+    opacity: 0.8;
+}
+
+.d1 { top: 30%; left: 20%; background-color: #5bf479; }
+.d2 { top: 60%; left: 40%; background-color: #ffcc00; }
+.d3 { top: 40%; left: 70%; background-color: #ff3b30; }
+.d4 { top: 70%; left: 80%; background-color: #5bf479; }
+
+/* حامل الشاشة */
+.stand {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(to bottom, #444, #222);
+}
+
+.base {
+    width: 120px;
+    height: 8px;
+    background-color: #555;
+    border-radius: 4px 4px 0 0;
+    margin-bottom: 20px;
+}
+
+.desk-accessories {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.keyboard {
+    width: 140px;
+    height: 10px;
+    background-color: #eee;
+    border-radius: 2px;
+    transform: perspective(10px) rotateX(2deg);
+}
+
+.mouse {
+    width: 15px;
+    height: 20px;
+    background-color: #eee;
+    border-radius: 8px;
+}
+
+/* قسم الهندسة الدقيقة */
+.engineering-section {
+    padding: 100px 5%;
+    text-align: center;
+}
+
+.eng-header h2 {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.eng-header p {
+    color: #9ca3af;
+    margin-bottom: 50px;
+}
+
+.eng-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.eng-card {
+    background-color: #151916;
+    border: 1px solid #232a25;
+    border-left: 3px solid #5bf479; /* الخط الأخضر الجانبي */
+    border-radius: 6px;
+    padding: 35px 25px;
+    text-align: left;
+    transition: transform 0.3s;
+}
+
+.eng-card:hover {
+    transform: translateY(-5px);
+}
+
+.eng-card i {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.eng-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.eng-card p {
+    color: #9ca3af;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* قسم الإحصائيات */
+.stats-section {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 5% 100px;
+    border-bottom: 1px solid #1a1f1c;
+}
+
+.stat-box {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 56px;
+    font-weight: 800;
+    color: #5bf479;
+    letter-spacing: -2px;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #9ca3af;
+    letter-spacing: 1.5px;
+}
+
+/* الفوتر */
+footer {
+    padding: 60px 5% 30px;
+    background-color: #0b0d0c;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.footer-left { max-width: 300px; }
+
+.footer-left .logo {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.footer-left p {
+    color: #9ca3af;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.footer-right {
+    display: flex;
+    gap: 80px;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.footer-col h4 {
+    color: #5bf479;
+    font-size: 11px;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.footer-col a {
+    color: #9ca3af;
+    font-size: 13px;
+    transition: color 0.3s;
+}
+
+.footer-col a:hover { color: #ffffff; }
+
+.footer-bottom {
+    text-align: left;
+    border-top: 1px solid #1a1f1c;
+    padding-top: 30px;
+    color: #9ca3af;
+    font-size: 11px;
+}
+
+/* التجاوب مع الجوال (Responsive) */
+@media (max-width: 1024px) {
+    .mission-vision { grid-template-columns: 1fr; }
+    .platform-section { flex-direction: column; }
+    .monitor { width: 100%; max-width: 450px; }
+}
+
+@media (max-width: 768px) {
+    .about-hero h1 { font-size: 42px; }
+    .eng-grid { grid-template-columns: 1fr; }
+    .stats-section { flex-wrap: wrap; gap: 40px; }
+    .stat-box { width: 40%; }
+    .nav-links { display: none; }
+    .footer-right { flex-direction: column; gap: 30px; }
+}

@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { MatIcon } from '@angular/material/icon';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-sign-up',
@@ -58,7 +59,7 @@ form= new FormGroup({
       password: this.form.value.password
     };
 
-    this.http.post('http://localhost:3000/users', data).subscribe({
+    this.http.post(`${environment.legacyJsonBaseUrl}/users`, data).subscribe({
       next: (res) => {
         console.log('User added:', res);
         this.router.navigate(['/login']);

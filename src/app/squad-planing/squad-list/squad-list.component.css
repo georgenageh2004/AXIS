@@ -1,80 +1,86 @@
-.squad-table-card {
-  background-color: #1f1f1f;
-  border: 2px solid #23d064;
-  padding: 20px;
-  border-radius: 20px;
-  width: 90%;
-  margin: 20px auto;
+:root {
+  --main-green: #77d36d;
 }
 
+.squad-table-card {
+  background-color: #1f1f1f;
+  border: 2px solid var(--main-green);
+  border-radius: 20px;
+  padding: 20px;
+  width: 90%;
+  margin: 20px auto;
+  color: white;
+}
+span.pos{
+  color: #77d36d;
+}
 .squad-list-title {
   text-align: center;
   font-size: 22px;
   font-weight: bold;
-  color: white;
   margin-bottom: 15px;
+  color: #77d36d;
 }
 
-.squad-scroll-container {
-  max-height: 210px; /* يظهر حوالي 5 لاعيبة */
-  overflow-y: auto;
-  padding-right: 5px; /* علشان الاسكرول */
+.squad-rows {
+  display: flex;
+  flex-direction: column;
 }
 
-/* Scrollbar custom */
-.squad-scroll-container::-webkit-scrollbar {
-  width: 6px;
+.squad-header, .squad-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+  padding: 10px;
+  align-items: center;
 }
 
-.squad-scroll-container::-webkit-scrollbar-track {
-  background: #1f1f1f;
-  border-radius: 10px;
-}
-
-.squad-scroll-container::-webkit-scrollbar-thumb {
-  background: #23d064;
-  border-radius: 10px;
-}
-
-.squad-scroll-container::-webkit-scrollbar-thumb:hover {
-  background: #1fff7d; /* لما تعمل hover */
-}
-
-.squad-table {
-  width: 100%;
-  border-collapse: collapse;
-  color: white;
-  font-size: 15px;
-}
-
-.squad-table thead tr {
-  background-color: #2d2d2d;
-}
-
-.squad-table th {
-  padding: 12px;
-  color: #23d064;
+.squad-header {
   font-weight: bold;
-  text-align: left;
-  border-bottom: 1px solid #23d064;
+  border-bottom: 2px solid var(--main-green);
 }
 
-.squad-table td {
-  padding: 10px 12px;
+.squad-row {
   border-bottom: 1px solid #333;
+  transition: 0.3s;
 }
 
-.squad-table tbody tr:hover {
+.squad-row:hover {
   background-color: #2a2a2a;
 }
 
-/* Active / Injured colors */
-.active {
-  color: #23d064;
-  font-weight: bold;
+.player-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.injured {
-  color: #ff4d4d;
+.player-image {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+button {
+
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
   font-weight: bold;
+  transition: 0.3s;
+  background-color: #77d36d;
+}
+button:hover {
+scale: 1.1;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+button:disabled:hover {
+  scale: 1;
 }

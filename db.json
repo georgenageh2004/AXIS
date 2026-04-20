@@ -1,15 +1,22 @@
 {
-  "users": [
+  "shortlist": [
     {
-      "email": "test@gmail.com",
-      "password": "123456",
-      "id": "f54d"
-    },
-    {
-      "id": "3ea0",
-      "username": "george",
-      "email": "georgenageh705@gmail.com",
-      "password": "123456"
+      "id": 1,
+      "name": "Alisson Becker",
+      "age": 31,
+      "position": "GK",
+      "fitness": 90,
+      "passAccuracy": 85,
+      "goals": 0,
+      "nationality": "Brazil",
+      "isInjured": false,
+      "assists": 0,
+      "tackles": 1,
+      "nationalteam": "England",
+      "club": "Liverpool",
+      "matchesPlayed": 28,
+      "image": "https://fbref.com/req/202302030/images/headshots/7a2e46a8_2022.jpg",
+      "playerId": 1
     }
   ]
 }

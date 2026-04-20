@@ -30,10 +30,10 @@
     </div>
 
     <div class="fitness-section">
-        <p class="fitness-label">Fitness</p>
+        <p class="fitness-label"></p>
         <div class="fitness-bar-container">
-            <div class="fitness-bar" [style.width]="player.fitness"></div>
-            <span class="fitness-value">{{ player.fitness }}</span>
+            <div class="fitness-bar" [style.width]="player.nationality"></div>
+            <span class="fitness-value">{{ player.nationality }}</span>
         </div>
     </div>
 
@@ -42,13 +42,14 @@
             <span class="stat-label">Matches played</span>
             <span class="stat-value">{{ player.matchesPlayed }}</span>
         </div>
+        
+        <div class="stat-item">
+            <span class="stat-label">Goals</span>
+            <span class="stat-value ">{{ player.goals }}</span>
+        </div>
         <div class="stat-item">
             <span class="stat-label">Assists</span>
             <span class="stat-value">{{ player.assists }}</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-label">Pass Accuracy</span>
-            <span class="stat-value pass-accuracy-value">{{ player.passAccuracy }}</span>
         </div>
         <div class="stat-item">
             <span class="stat-label">Tackles</span>

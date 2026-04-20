@@ -1,4 +1,4 @@
-<div class="sidebar">
+<div class="sidebar" [class.open]="isOpen" [class.overlay-mode]="overlayMode">
     
     <div class="logo">
       <img src="assets/Project logo.png"alt="AXIS Logo" />
@@ -7,31 +7,38 @@
 
     <nav>
       <ul>
-        <li routerLink="/dashboard" routerLinkActive="active">
+        <li routerLink="/program/dashboard" routerLinkActive="active" (click)="requestClose()">
             <mat-icon class="icon">trending_up</mat-icon>
         
-          Dashboard
+          <span class="nav-label">Dashboard</span>
         </li>
 
-        <li routerLink="/squad-planning" routerLinkActive="active"
+        <li routerLink="/program/squad-planning" routerLinkActive="active" (click)="requestClose()"
         >
           <mat-icon class="icon">crop_rotate</mat-icon>
-          Squad planning
+          <span class="nav-label">Squad planning</span>
         </li>
-         <li routerLink="/questions" routerLinkActive="active"
+         <li routerLink="/questions" routerLinkActive="active" (click)="requestClose()"
         >
           <mat-icon class="icon">dynamic_form</mat-icon>
-        questions
+        <span class="nav-label">questions</span>
         </li>
-        <li routerLink="/" routerLinkActive="active"
+        <li routerLink="/program" routerLinkActive="active" (click)="requestClose()"
         [routerLinkActiveOptions]="{exact:true}">
          <mat-icon class="icon">search</mat-icon>
-          Scouting
+          <span class="nav-label">Scouting</span>
         </li>
 
-        <li routerLink="/repots" routerLinkActive="active">
+        
+        <li routerLink="/program/short-list" routerLinkActive="active" (click)="requestClose()">
+          <mat-icon class="icon">checklist</mat-icon>
+          <span class="nav-label">Short List</span>
+        </li>
+
+
+        <li routerLink="/program/repots" routerLinkActive="active" (click)="requestClose()">
           <mat-icon class="icon">assignment</mat-icon>
-          Reports
+          <span class="nav-label">Reports</span>
         </li>
       </ul>
     </nav>
