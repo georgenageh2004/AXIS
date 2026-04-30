@@ -1,11 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, DestroyRef, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIcon } from "@angular/material/icon";
 import { Router } from '@angular/router';
-import { CartService } from '../../services/cart.service';
-import { Player, ShortlistItem,  } from '../../Models/players';
+import { finalize } from 'rxjs';
+import { Player } from '../../Models/players';
 import { ScoutingFilterQuery } from '../../services/scouting-filter-state.service';
 import { environment } from '../../../environments/environment';
+import { ShortlistService } from '../../services/shortlist.service';
 
 interface PlayerApiDto {
   playerId: number;
@@ -44,15 +46,16 @@ interface PlayersPageResponse {
   templateUrl: './palyers-scout.component.html',
   styleUrl: './palyers-scout.component.css'
 })
-export class PalyersScoutComponent implements OnChanges {
+export class PalyersScoutComponent implements OnChanges, OnInit {
   private readonly API_BASE_URL = `${environment.apiBaseUrl}/api/players`;
   private initialized = false;
+  private readonly destroyRef = inject(DestroyRef);
 
   @Input() activeFilterQuery: ScoutingFilterQuery | null = null;
 
   players: Player[] = [];
-  shortlist: ShortlistItem[] = [];
   shortlistIds = new Set<number>();
+  updatingPlayerIds = new Set<number>();
 
   currentPage = 1;
   pageSize = 30;
@@ -60,17 +63,33 @@ export class PalyersScoutComponent implements OnChanges {
 
   isLoading = false;
   errorMessage = '';
+  shortlistErrorMessage = '';
 
-  constructor(private http: HttpClient, private shortlistService: CartService, private router: Router) {}
+  private readonly userId: number;
 
-  ngOnInit() {
+  constructor(private http: HttpClient, private shortlistService: ShortlistService, private router: Router) {
+    this.userId = this.shortlistService.resolveUserId();
+  }
+
+  ngOnInit(): void {
     this.initialized = true;
     this.refreshPlayers(1);
 
-    this.shortlistService.getShortlist().subscribe(list => {
-      this.shortlist = list;
-      this.shortlistIds = new Set(list.map(i => i.playerId));
-    });
+    this.shortlistService
+      .watchShortlist()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(list => {
+        this.shortlistIds = new Set(list.map(item => item.playerId));
+      });
+
+    this.shortlistService
+      .getUserShortlist(this.userId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        error: (error: Error) => {
+          this.shortlistErrorMessage = error.message;
+        }
+      });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -145,8 +164,30 @@ export class PalyersScoutComponent implements OnChanges {
     this.refreshPlayers(targetPage);
   }
 
-  toggle(player: Player) {
-    this.shortlistService.toggleShortlist(player);
+  toggle(player: Player): void {
+    if (this.updatingPlayerIds.has(player.id)) {
+      return;
+    }
+
+    this.shortlistErrorMessage = '';
+    this.updatingPlayerIds.add(player.id);
+
+    const request$ = this.isInShortlist(player)
+      ? this.shortlistService.removeFromShortlist(this.userId, player.id)
+      : this.shortlistService.addToShortlist(this.userId, player);
+
+    request$
+      .pipe(
+        finalize(() => {
+          this.updatingPlayerIds.delete(player.id);
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe({
+        error: (error: Error) => {
+          this.shortlistErrorMessage = error.message;
+        }
+      });
   }
 
   viewProfile(player: Player): void {
@@ -157,8 +198,8 @@ export class PalyersScoutComponent implements OnChanges {
     return this.shortlistIds.has(player.id);
   }
 
-  clearAll() {
-    this.shortlistService.clearShortlist();
+  isPlayerUpdating(playerId: number): boolean {
+    return this.updatingPlayerIds.has(playerId);
   }
 
   onImageError(player: Player): void {

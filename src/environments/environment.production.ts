@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://api.your-domain.com',
-  legacyJsonBaseUrl: 'https://api.your-domain.com'
+  apiBaseUrl: 'https://axis-api.runasp.net',
+  legacyJsonBaseUrl: 'https://axis-api.runasp.net',
+  shortlistDefaultUserId: 1
 };

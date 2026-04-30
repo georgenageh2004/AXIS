@@ -217,9 +217,8 @@
 
 /* Add */
 .actions .add {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
+  min-height: 38px;
+  border-radius: 22px;
 
   background: transparent;
   border: 2px solid #6ddc6d;
@@ -228,6 +227,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
+  padding: 0 12px;
+  cursor: pointer;
 
   transition: all 0.2s ease;
 }
@@ -235,7 +237,13 @@
 .actions .add:hover {
   background: #6ddc6d;
   color: #1e1e1e;
-  transform: scale(1.08);
+  transform: translateY(-2px);
+}
+
+.actions .add:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
 }
 
 @media (max-width: 1024px) {

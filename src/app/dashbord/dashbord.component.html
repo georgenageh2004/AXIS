@@ -1,215 +1,147 @@
-<body>
-    <div class="dashboard-container">
-        <header class="main-header">
-            <h1>Arsnal <span class="text-primary">FC</span></h1>
-        </header>
+<div class="dashboard-root">
+	<div class="dash-container">
+		<header class="dash-header">
+			<p class="team-name">Club ID {{ selectedTeamId }}</p>
+			<h1>Tactics Overview</h1>
+			<p class="subtitle">First Team Squad Analytics</p>
+		</header>
 
-        <div class="top-summary">
-            <div class="summary-card border-primary">
-                <h2>4-3-3</h2>
-                <p>MAIN FORMATION</p>
-            </div>
-            <div class="summary-card border-primary">
-                <h2>12M</h2>
-                <p>BUDGET</p>
-            </div>
-            <div class="summary-card border-primary">
-                <h2>DEFENDING</h2>
-                <p>PLAYING STYLE</p>
-            </div>
-        </div>
+		<div class="state" *ngIf="loading">Loading dashboard...</div>
+		<div class="state state-error" *ngIf="error">{{ error }}</div>
 
-        <div class="bento-grid">
-            
-            <div class="card col-span-2">
-                <div class="card-header">
-                    <span class="dot primary-dot"></span>
-                    <span class="header-title">GOALKEEPING PRIMARY - DAVID RAYA</span>
-                </div>
-                <h3 class="stat-highlight">Save Percentage: <span class="text-primary">78.4%</span></h3>
-                
-                <div class="inner-grid grid-4">
-                    <div class="inner-card">
-                        <p class="label">MATCHES / STARTS</p>
-                        <p class="value">32 / 32</p>
-                    </div>
-                    <div class="inner-card">
-                        <p class="label">MINUTES / 90S</p>
-                        <p class="value">2,880 / <br>32.0</p>
-                    </div>
-                    <div class="inner-card">
-                        <p class="label">GOALS AGAINST (GA)</p>
-                        <p class="value text-danger">24</p>
-                    </div>
-                    <div class="inner-card">
-                        <p class="label">SAVES / SAVE%</p>
-                        <p class="value text-primary">87 / 78%</p>
-                    </div>
-                    <div class="inner-card">
-                        <p class="label">CLEAN SHEETS / CS%</p>
-                        <p class="value text-primary">15 / 46.9%</p>
-                    </div>
-                    <div class="inner-card">
-                        <p class="label">PK ALLOWED (PKA)</p>
-                        <p class="value">4</p>
-                    </div>
-                    <div class="inner-card">
-                        <p class="label">PK SAVED (PKSV)</p>
-                        <p class="value text-primary">1</p>
-                    </div>
-                    <div class="inner-card">
-                        <p class="label">PK CONCEDED (PKCON)</p>
-                        <p class="value">3</p>
-                    </div>
-                </div>
-            </div>
+		<main class="grid" *ngIf="!loading && !error">
+			<ng-container *ngFor="let section of sections">
+				<section class="card" *ngIf="hasRows(getRows(section.key))">
+					<header class="card-header">
+						<h3>{{ section.title }}</h3>
+						<span class="card-meta">Team Metrics</span>
+					</header>
+					<div class="table-wrap">
+						<table class="stats-table">
+							<thead>
+								<tr>
+									<th>Player</th>
+									<th class="metric-col">Metric</th>
+									<th class="value-col">Value</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									*ngFor="let row of getRows(section.key); trackBy: trackByIndex">
+									<td>{{ row.playerName }}</td>
+									<td class="metric-col muted-text">{{ row.metric }}</td>
+									<td class="value-col" [class.value-highlight]="isTop(row, section.key)">
+										{{ formatValue(row.value) }}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+			</ng-container>
 
-            <div class="card">
-                <div class="card-header space-between">
-                    <span class="header-title">ASSISTS & G+A FOCUS</span>
-                    <span class="text-primary">★</span>
-                </div>
-                <div class="player-info">
-                    <div class="player-avatar"></div>
-                    <div>
-                        <h4 class="player-name">Bukayo Saka</h4>
-                        <p class="player-role">Right Winger</p>
-                    </div>
-                </div>
-                <div class="stat-row">
-                    <span>Assists (Ast)</span>
-                    <span class="text-primary value">12</span>
-                </div>
-                <div class="stat-row">
-                    <span>G+A Total</span>
-                    <span class="text-primary value">24</span>
-                </div>
-                <div class="stat-row">
-                    <span>Expected Assisted Goals (xAG)</span>
-                    <span class="text-primary value">0.45</span>
-                </div>
-            </div>
-
-            <div class="card col-span-1-5">
-                <div class="card-header">
-                    <span class="header-title">Goals & Efficiency: Kai Havertz</span>
-                </div>
-                <div class="inner-grid grid-2 mt-4">
-                    <div class="inner-card">
-                        <p class="label">GOALS (GLS)</p>
-                        <p class="value text-primary">12</p>
-                    </div>
-                    <div class="inner-card">
-                        <p class="label">EXPECTED GOALS (xG)</p>
-                        <p class="value">10.8</p>
-                    </div>
-                    <div class="inner-card">
-                        <p class="label">NON-PK XG (NPXG)</p>
-                        <p class="value">10.1</p>
-                    </div>
-                    <div class="inner-card">
-                        <p class="label">GOALS MINUS PK (G-PK)</p>
-                        <p class="value">11</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <span class="header-title">Playmaking</span>
-                </div>
-                <div class="list-stats mt-4">
-                    <div class="list-item inner-card">
-                        <p class="label">M. ØDEGAARD (PROP / KP / PPA)</p>
-                        <p class="value-small">156 / 82 / 48</p>
-                    </div>
-                    <div class="list-item inner-card">
-                        <p class="label">G. MARTINELLI (PROC / PRCP)</p>
-                        <p class="value-small">112 / 204</p>
-                    </div>
-                    <div class="list-item inner-card flex-row">
-                        <p class="label">DECLAN RICE (RECOV)</p>
-                        <p class="value-small text-blue">234</p>
-                    </div>
-                    <div class="list-item inner-card flex-row">
-                        <p class="label">GABRIEL MAGALHÃES (PKWON)</p>
-                        <p class="value-small text-blue">1</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <span class="header-title">Discipline</span>
-                    <span>⚠️</span>
-                </div>
-                <div class="discipline-list mt-4">
-                    <div class="discipline-item">
-                        <div class="card-icon yellow-card">Y</div>
-                        <div>
-                            <p class="player-name-small">JURRIËN TIMBER</p>
-                            <p class="label">4 Cards (Crdy)</p>
-                        </div>
-                    </div>
-                    <div class="discipline-item mt-4">
-                        <div class="card-icon red-card">R</div>
-                        <div>
-                            <p class="player-name-small">MYLES LEWIS-SKELLY</p>
-                            <p class="label">1 Card (Crdr)</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card col-span-2">
-                <div class="card-header space-between">
-                    <span class="header-title">Defensive Actions: Thomas Partey</span>
-                    <span class="badge">MIDFIELD ANCHOR</span>
-                </div>
-                <div class="inner-grid grid-4 mt-4">
-                    <div class="inner-card border-left-primary">
-                        <p class="label">TACKLES (TKL)</p>
-                        <p class="value">58</p>
-                    </div>
-                    <div class="inner-card border-left-primary">
-                        <p class="label">TKL WON (TKLW)</p>
-                        <p class="value">34</p>
-                    </div>
-                    <div class="inner-card border-left-primary">
-                        <p class="label">INTERCEPTIONS (INT)</p>
-                        <p class="value">42</p>
-                    </div>
-                    <div class="inner-card border-left-primary">
-                        <p class="label">TKL+INT</p>
-                        <p class="value">100</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header space-between">
-                    <span class="header-title">Defensive Core & Utility</span>
-                    <div class="icon-circle">📊</div>
-                </div>
-                <div class="utility-list mt-4">
-                    <div class="utility-item space-between">
-                        <div>
-                            <p class="player-name-small">WILLIAM SALIBA</p>
-                            <p class="label">Clr: 102 | Touches: 2840 | Carries: 1980</p>
-                        </div>
-                        <span class="text-primary">🛡️</span>
-                    </div>
-                    <div class="utility-item space-between mt-4">
-                        <div>
-                            <p class="player-name-small">LEANDRO TROSSARD</p>
-                            <p class="label">Blocks: 21 | Mis: 14 | Dis: 8</p>
-                        </div>
-                        <span class="text-muted">🛠️</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
- 
-    </div>
-</body>
+			<section class="card card-wide" *ngIf="hasRows(getRows('defensiveStats')) || hasRows(getRows('miscStats'))">
+				<header class="card-header">
+					<h3>Defensive &amp; Misc</h3>
+					<span class="card-meta">Split View</span>
+				</header>
+				<div class="split-grid">
+					<div class="split-col" *ngIf="hasRows(getRows('defensiveStats'))">
+						<h4>Defensive</h4>
+						<div class="table-grid">
+							<div class="table-wrap" *ngIf="defensiveSplit.left.length">
+								<table class="stats-table">
+									<thead>
+										<tr>
+											<th>Player</th>
+											<th class="metric-col">Metric</th>
+											<th class="value-col">Value</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr
+										*ngFor="let row of defensiveSplit.left; trackBy: trackByIndex">
+											<td>{{ row.playerName }}</td>
+											<td class="metric-col muted-text">{{ row.metric }}</td>
+											<td class="value-col" [class.value-highlight]="isTop(row, 'defensiveStats')">
+												{{ formatValue(row.value) }}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="table-wrap" *ngIf="defensiveSplit.right.length">
+								<table class="stats-table">
+									<thead>
+										<tr>
+											<th>Player</th>
+											<th class="metric-col">Metric</th>
+											<th class="value-col">Value</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr
+										*ngFor="let row of defensiveSplit.right; trackBy: trackByIndex">
+											<td>{{ row.playerName }}</td>
+											<td class="metric-col muted-text">{{ row.metric }}</td>
+											<td class="value-col" [class.value-highlight]="isTop(row, 'defensiveStats')">
+												{{ formatValue(row.value) }}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="split-col" *ngIf="hasRows(getRows('miscStats'))">
+						<h4>Misc</h4>
+						<div class="table-grid">
+							<div class="table-wrap" *ngIf="miscSplit.left.length">
+								<table class="stats-table">
+									<thead>
+										<tr>
+											<th>Player</th>
+											<th class="metric-col">Metric</th>
+											<th class="value-col">Value</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr
+										*ngFor="let row of miscSplit.left; trackBy: trackByIndex">
+											<td>{{ row.playerName }}</td>
+											<td class="metric-col muted-text">{{ row.metric }}</td>
+											<td class="value-col" [class.value-highlight]="isTop(row, 'miscStats')">
+												{{ formatValue(row.value) }}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="table-wrap" *ngIf="miscSplit.right.length">
+								<table class="stats-table">
+									<thead>
+										<tr>
+											<th>Player</th>
+											<th class="metric-col">Metric</th>
+											<th class="value-col">Value</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr
+										*ngFor="let row of miscSplit.right; trackBy: trackByIndex">
+											<td>{{ row.playerName }}</td>
+											<td class="metric-col muted-text">{{ row.metric }}</td>
+											<td class="value-col" [class.value-highlight]="isTop(row, 'miscStats')">
+												{{ formatValue(row.value) }}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+	</div>
+</div>

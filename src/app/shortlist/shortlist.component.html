@@ -1,12 +1,23 @@
 <div class="container">
   <div class="header-actions">
     <h2>Short List</h2>
-    <button class="clear-btn" (click)="clearAll()" [disabled]="shortlist.length === 0">
+    <div class="header-buttons">
+      <button class="compare-open-btn" type="button" (click)="openCompareLayer()" [disabled]="shortlist.length === 0 || isLoading">
+        <mat-icon>compare_arrows</mat-icon>
+        Compare ({{ compareIds.length }}/4)
+      </button>
+
+      <button class="clear-btn" (click)="clearAll()" [disabled]="shortlist.length === 0 || isMutating || isLoading">
       <mat-icon>delete_sweep</mat-icon> Clear all
-    </button>
+      </button>
+    </div>
   </div>
 
-  <p class="empty-msg" *ngIf="shortlist.length === 0">No players selected yet.</p>
+  <p class="state-message" *ngIf="isLoading">Loading shortlist...</p>
+  <p class="state-message error" *ngIf="errorMessage">{{ errorMessage }}</p>
+  <p class="state-message success" *ngIf="actionMessage">{{ actionMessage }}</p>
+
+  <p class="empty-msg" *ngIf="!isLoading && shortlist.length === 0">No players selected yet.</p>
 
   <div class="cards-grid">
     <div *ngFor="let player of shortlist" class="player-card">
@@ -14,10 +25,13 @@
       <div class="card-top">
         <!-- Avatar -->
         <div class="avatar">
-          <img [src]="player.player?.image" alt="player">
+          <img *ngIf="player.imageUrl; else avatarFallback" [src]="player.imageUrl" alt="player">
+          <ng-template #avatarFallback>
+            <span class="avatar-fallback">{{ player.name.charAt(0) }}</span>
+          </ng-template>
         </div>
 
-        <h3 class="name">{{ player.player?.name }}</h3>
+        <h3 class="name">{{ player.name }}</h3>
       </div>
 
       <!-- Player Info -->
@@ -26,18 +40,19 @@
         <!-- Position + Age -->
         <div class="player-top">
           <p class="position">
-            Position <span>{{ player.player?.position }}</span>
+            Position <span>{{ player.position }}</span>
           </p>
 
           <span class="age">
-            Age <span>{{ player.player?.age }}</span> 
+            Age <span>{{ player.age }}</span>
           </span>
         </div>
 
         <!-- Meta -->
         <div class="meta">
-          <span>National Team: <strong>{{ player.player?.nationality}}</strong></span>
-          <span>Club: <strong>{{player.player?.club }}</strong></span>
+          <span>National Team: <strong>{{ player.nationality || 'N/A' }}</strong></span>
+          <span>Club: <strong>{{ player.clubName || 'N/A' }}</strong></span>
+          <span *ngIf="player.leagueName">League: <strong>{{ player.leagueName }}</strong></span>
         </div>
 
       </div>
@@ -49,12 +64,12 @@
           View profile
         </button>
 
-        <!-- <button class="compare">
-          <mat-icon>compare_arrows</mat-icon>
-          Compare
-        </button> -->
+        <button class="compare" type="button" (click)="openCompareLayer(player.playerId)">
+          <mat-icon>{{ isInComparison(player.playerId) ? 'check' : 'compare_arrows' }}</mat-icon>
+          {{ isInComparison(player.playerId) ? 'Selected' : 'Compare' }}
+        </button>
 
-        <button class="remove" (click)="remove(player.playerId)">
+        <button class="remove" (click)="remove(player.playerId)" [disabled]="isMutating">
           <mat-icon>delete</mat-icon>
           Remove
         </button>
@@ -64,4 +79,103 @@
     </div>
   </div>
 
+</div>
+
+<div class="compare-layer-backdrop" *ngIf="isCompareLayerOpen" (click)="closeCompareLayer()">
+  <div class="compare-layer" (click)="$event.stopPropagation()">
+    <div class="compare-layer-header">
+      <div>
+        <h3>Player Comparison</h3>
+        <p>Select up to 4 players from shortlist</p>
+      </div>
+
+      <div class="compare-layer-actions">
+        <button class="clear-compare-btn" type="button" (click)="clearComparison()" [disabled]="compareIds.length === 0">Clear</button>
+        <button class="close-compare-btn" type="button" (click)="closeCompareLayer()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <p class="state-message" *ngIf="isCompareLoading">Loading full player details...</p>
+    <p class="state-message error" *ngIf="compareErrorMessage">{{ compareErrorMessage }}</p>
+    <p class="state-message success" *ngIf="compareActionMessage">{{ compareActionMessage }}</p>
+
+    <div class="compare-selected-list" *ngIf="compareIds.length > 0; else noCompareSelection">
+      <div class="compare-selected-card" *ngFor="let playerId of compareIds">
+        <div class="compare-card-left">
+          <img
+            *ngIf="getCompareProfileById(playerId)?.image; else compareAvatarFallback"
+            [src]="getCompareProfileById(playerId)?.image"
+            [alt]="getCompareProfileById(playerId)?.name || 'Player'"
+          >
+
+          <ng-template #compareAvatarFallback>
+            <span class="avatar-fallback compare-fallback">{{ (getCompareProfileById(playerId)?.name || 'P').charAt(0) }}</span>
+          </ng-template>
+
+          <div>
+            <h4>{{ getCompareProfileById(playerId)?.name || 'Loading...' }}</h4>
+            <p>
+              {{ getCompareProfileById(playerId)?.position || '-' }}
+              •
+              {{ getCompareProfileById(playerId)?.club || '-' }}
+            </p>
+            <p class="compare-meta">
+              Age {{ getCompareProfileById(playerId)?.age || 0 }}
+              •
+              {{ getCompareProfileById(playerId)?.nationality || '-' }}
+            </p>
+          </div>
+        </div>
+
+        <div class="compare-card-actions">
+          <button type="button" class="view" (click)="viewProfile(playerId)">View</button>
+          <button type="button" class="remove" (click)="removeFromComparison(playerId)">Remove</button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noCompareSelection>
+      <p class="empty-msg compare-empty">No players selected yet. Pick players from the list below.</p>
+    </ng-template>
+
+    <div class="compare-picker">
+      <h4>Add Players From Shortlist</h4>
+
+      <div class="compare-picker-grid">
+        <div class="compare-picker-card" *ngFor="let player of shortlist">
+          <div>
+            <div class="name">{{ player.name }}</div>
+            <div class="meta">{{ player.position }} • {{ player.clubName || 'N/A' }}</div>
+          </div>
+
+          <button
+            type="button"
+            class="compare-add-btn"
+            (click)="addToComparison(player.playerId)"
+            [disabled]="!canAddToComparison(player.playerId)"
+          >
+            {{ isInComparison(player.playerId) ? 'Selected' : 'Add' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-stats" *ngIf="compareCanRenderTable">
+      <div class="compare-stats-section" *ngFor="let section of compareSections">
+        <h4>{{ section.title }}</h4>
+
+        <div class="compare-stats-row compare-stats-header">
+          <span>Metric</span>
+          <span *ngFor="let playerId of compareIds">{{ getCompareProfileById(playerId)?.name || 'Player' }}</span>
+        </div>
+
+        <div class="compare-stats-row" *ngFor="let row of section.rows">
+          <span class="metric-label">{{ row.label }}</span>
+          <span *ngFor="let value of row.values">{{ value }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

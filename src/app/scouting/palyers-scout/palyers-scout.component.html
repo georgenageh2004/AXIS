@@ -11,6 +11,10 @@
     <div class="state-message error">{{ errorMessage }}</div>
   }
 
+  @if (shortlistErrorMessage) {
+    <div class="state-message error">{{ shortlistErrorMessage }}</div>
+  }
+
   @if (isLoading) {
     <div class="state-message">Loading players...</div>
   } @else {
@@ -58,9 +62,14 @@
         </button>
 
         
-      <button class="add" (click)="toggle(player)">
+      <button
+        class="add"
+        (click)="toggle(player)"
+        [disabled]="isPlayerUpdating(player.id)"
+        [attr.aria-label]="isInShortlist(player) ? 'Remove from shortlist' : 'Add to shortlist'"
+      >
         <mat-icon>{{ shortlistIds.has(player.id) ? 'remove' : 'add' }}</mat-icon>
-        <!-- {{ shortlistIds.has(player.id) ? 'Remove from Shortlist' : 'Add to Shortlist' }} -->
+        <span>{{ shortlistIds.has(player.id) ? 'Remove' : 'Add' }}</span>
       </button>
       </div>
 
