@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 import { DashboardService } from '../services/dashboard.service';
 import { DashboardResponse, StatItem } from '../Models/dashboard.models';
 
 @Component({
   selector: 'app-dashbord',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule],
   templateUrl: './dashbord.component.html',
   styleUrls: ['./dashbord.component.css']
 })
@@ -17,6 +17,7 @@ export class DashbordComponent implements OnInit {
   error: string | null = null;
   data: DashboardResponse | null = null;
   selectedTeamId = '2';
+  clubName = '';
   maxValues: Partial<Record<StatKey, number>> = {};
   defensiveSplit: SplitRows = { left: [], right: [] };
   miscSplit: SplitRows = { left: [], right: [] };
@@ -28,7 +29,11 @@ export class DashbordComponent implements OnInit {
     { key: 'passingStats', title: 'Passing Stats' }
   ];
 
-  constructor(private svc: DashboardService, private route: ActivatedRoute) {}
+  constructor(
+    private svc: DashboardService,
+    private route: ActivatedRoute,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.selectedTeamId = this.resolveTeamId();
@@ -41,6 +46,7 @@ export class DashbordComponent implements OnInit {
     this.svc.fetchDashboard(teamId).subscribe({
       next: (res) => {
         this.data = res;
+        this.clubName = this.resolveClubName(res);
         this.maxValues = this.computeMaxValues(res);
         this.defensiveSplit = this.splitRows(this.getRows('defensiveStats'), 'tkl');
         this.miscSplit = this.splitRows(this.getRows('miscStats'));
@@ -66,7 +72,19 @@ export class DashbordComponent implements OnInit {
     return typeof max === 'number' && row.value === max;
   }
 
-  formatValue(value: number): string {
+  formatValue(value: number, metric?: string): string {
+    if (typeof value !== 'number' || Number.isNaN(value)) {
+      return '-';
+    }
+
+    const hasPercent = typeof metric === 'string' && metric.includes('%');
+    if (hasPercent) {
+      return new Intl.NumberFormat(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(value);
+    }
+
     return Intl.NumberFormat().format(value);
   }
 
@@ -75,6 +93,11 @@ export class DashbordComponent implements OnInit {
   }
 
   private resolveTeamId(): string {
+    const clubId = this.authService.getClubId();
+    if (Number.isInteger(clubId) && (clubId ?? 0) > 0) {
+      return String(clubId);
+    }
+
     const fromParam = this.route.snapshot.paramMap.get('teamId');
     const fromQuery = this.route.snapshot.queryParamMap.get('teamId');
     const resolved = (fromParam || fromQuery || '2').trim();
@@ -95,6 +118,16 @@ export class DashbordComponent implements OnInit {
       acc[key] = rows.length ? Math.max(...rows.map((r: StatItem) => r.value)) : undefined;
       return acc;
     }, {} as Partial<Record<StatKey, number>>);
+  }
+
+  private resolveClubName(data: DashboardResponse | null): string {
+    const nameFromTeam = data?.team?.name?.trim();
+    if (nameFromTeam) {
+      return nameFromTeam;
+    }
+
+    const fallback = data?.teamName?.trim();
+    return fallback || '';
   }
 
   private splitRows(rows: StatItem[], metricToken?: string): SplitRows {

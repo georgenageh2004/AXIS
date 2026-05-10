@@ -18,15 +18,18 @@ export interface Player {
   id: number;
   name: string;
   position: string;
+  positions?: string[];
   age?: number;
-  goals: number;
+  goals?: number;
   nationality?: string;
   club?: string;
   image?: string;
+  imageUrl?: string;
+  zScore?: number;
   maxZScore?: number;
-  assists: number;
-  tackles: number;
-  matchesPlayed: number;
+  assists?: number;
+  tackles?: number;
+  matchesPlayed?: number;
 }
 
 export interface ShortlistItem {

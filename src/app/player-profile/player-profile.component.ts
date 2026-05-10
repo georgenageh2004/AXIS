@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RadarComponent } from "./radar/radar.component";
 import { SimilarPlayersComponent } from './similar-players';
 import { PlayersProfile } from '../Models/Players_profile';
@@ -6,10 +7,11 @@ import { ProfileService } from '../services/profile.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 
+
 @Component({
   selector: 'app-player-profile',
   standalone: true,
-  imports: [RadarComponent, SimilarPlayersComponent, MatIcon],
+  imports: [CommonModule, RadarComponent, SimilarPlayersComponent, MatIcon],
   templateUrl: './player-profile.component.html',
   styleUrl: './player-profile.component.css'
 })

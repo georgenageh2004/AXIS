@@ -1,7 +1,10 @@
 <div class="dashboard-root">
 	<div class="dash-container">
 		<header class="dash-header">
-			<p class="team-name">Club ID {{ selectedTeamId }}</p>
+			<p class="team-name">
+				<!-- <span class="team-label">Club</span> -->
+				<span class="team-value">{{ clubName  }}</span>
+			</p>
 			<h1>Tactics Overview</h1>
 			<p class="subtitle">First Team Squad Analytics</p>
 		</header>
@@ -31,7 +34,7 @@
 									<td>{{ row.playerName }}</td>
 									<td class="metric-col muted-text">{{ row.metric }}</td>
 									<td class="value-col" [class.value-highlight]="isTop(row, section.key)">
-										{{ formatValue(row.value) }}
+										{{ formatValue(row.value, row.metric) }}
 									</td>
 								</tr>
 							</tbody>
@@ -64,7 +67,7 @@
 											<td>{{ row.playerName }}</td>
 											<td class="metric-col muted-text">{{ row.metric }}</td>
 											<td class="value-col" [class.value-highlight]="isTop(row, 'defensiveStats')">
-												{{ formatValue(row.value) }}
+												{{ formatValue(row.value, row.metric) }}
 											</td>
 										</tr>
 									</tbody>
@@ -85,7 +88,7 @@
 											<td>{{ row.playerName }}</td>
 											<td class="metric-col muted-text">{{ row.metric }}</td>
 											<td class="value-col" [class.value-highlight]="isTop(row, 'defensiveStats')">
-												{{ formatValue(row.value) }}
+												{{ formatValue(row.value, row.metric) }}
 											</td>
 										</tr>
 									</tbody>
@@ -111,7 +114,7 @@
 											<td>{{ row.playerName }}</td>
 											<td class="metric-col muted-text">{{ row.metric }}</td>
 											<td class="value-col" [class.value-highlight]="isTop(row, 'miscStats')">
-												{{ formatValue(row.value) }}
+												{{ formatValue(row.value, row.metric) }}
 											</td>
 										</tr>
 									</tbody>

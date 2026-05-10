@@ -383,10 +383,15 @@ export class FiltersComponent implements OnInit {
     const requestQuery = this.buildFilterRequest();
     this.filtersApplied.emit(requestQuery as unknown as Record<string, string | number>);
     this.scrollToTop();
-    this.resetFilters();
+    this.resetFilters(selectedPosition);
   }
 
   private scrollToTop(): void {
+    const isSmallScreen = window.matchMedia('(max-width: 1024px)').matches;
+    if (isSmallScreen) {
+      return;
+    }
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -407,10 +412,10 @@ export class FiltersComponent implements OnInit {
     }
   }
 
-  private resetFilters(): void {
+  private resetFilters(keepPosition?: string): void {
     this.filtersForm.reset({
       name: '',
-      position: '',
+      position: keepPosition ?? '',
       league: '',
       clubs: '',
       nationality: '',

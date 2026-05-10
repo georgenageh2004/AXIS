@@ -17,9 +17,9 @@
         <span>{{ player.name }}</span>
       </div>
       <div ><span class="pos">{{ player.position }}</span></div>
-      <div>{{ player.age }}</div>
-      <div>{{ player.nationality }}</div>
-      <div>{{ player.matchesPlayed }}</div>
+      <div>{{ player.age ?? '-' }}</div>
+      <div>{{ player.nationality ?? '-' }}</div>
+      <div>{{ player.matchesPlayed ?? '-' }}</div>
       <div>
         <button
           (click)="selectReplacement(player)"

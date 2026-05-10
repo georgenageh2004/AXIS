@@ -27,8 +27,7 @@
 
 </div>
 <div class="btns">
-        <button type="button" class="login" (click)="onSubmit()">Log in</button>
-        <button type="button" class="signup" (click)="signup()">Sign up</button>
+    <button type="button" class="login" (click)="onSubmit()" [disabled]="loading">Log in</button>
 </div>
 </div>
 </form>

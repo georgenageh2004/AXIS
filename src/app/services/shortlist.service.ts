@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { Player } from '../Models/players';
 import { environment } from '../../environments/environment';
+import { AuthService } from './auth.service';
 
 interface ApiMessageResponse {
   message?: string;
@@ -29,6 +30,7 @@ export interface ShortlistPlayer {
 })
 export class ShortlistService {
   private readonly http = inject(HttpClient);
+  private readonly authService = inject(AuthService);
   private readonly API_BASE_URL = `${environment.apiBaseUrl}/api`;
 
   private readonly userIdStorageKeys = ['axis_user_id', 'userId'] as const;
@@ -41,6 +43,11 @@ export class ShortlistService {
   resolveUserId(userId?: number): number {
     if (Number.isInteger(userId) && (userId ?? 0) > 0) {
       return userId as number;
+    }
+
+    const authUserId = this.authService.getUserId();
+    if (Number.isInteger(authUserId) && (authUserId ?? 0) > 0) {
+      return authUserId as number;
     }
 
     for (const key of this.userIdStorageKeys) {

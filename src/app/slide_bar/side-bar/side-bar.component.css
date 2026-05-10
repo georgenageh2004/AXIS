@@ -67,6 +67,32 @@ nav ul .active {
   color: #ffffff;
 }
 
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.logout {
+  margin-bottom: 20px;
+  width: 100%;
+  font-size: 17px;
+  border: 1px solid #333;
+  background: transparent;
+  color: #bfbfbf;
+  padding: 9px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.logout:hover {
+  background: #2e2e2e;
+  color: #ffffff;
+}
+
 @media (min-width: 992px) {
   .sidebar.overlay-mode {
     transform: translateX(-100%);

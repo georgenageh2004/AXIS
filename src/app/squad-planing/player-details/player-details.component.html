@@ -24,7 +24,7 @@
         <img [src]="player.image" alt="{{ player.name }}">
         <div class="header-info">
             <h2>{{ player.name }}</h2>
-            <p class="age-pos">Age: {{ player.age }} | {{ player.position }}</p>
+            <p class="age-pos">Age: {{ player.age ?? '-' }} | {{ player.position }}</p>
             <!-- <img [src]="player.flagImage" alt="Flag" class="flag-icon">  -->
         </div>
     </div>
@@ -32,28 +32,36 @@
     <div class="fitness-section">
         <p class="fitness-label"></p>
         <div class="fitness-bar-container">
-            <div class="fitness-bar" [style.width]="player.nationality"></div>
-            <span class="fitness-value">{{ player.nationality }}</span>
+            <div class="fitness-bar" [style.width]="player.nationality ?? ''"></div>
+            <span class="fitness-value">{{ player.nationality ?? '-' }}</span>
         </div>
     </div>
 
     <div class="stats-section">
         <div class="stat-item">
             <span class="stat-label">Matches played</span>
-            <span class="stat-value">{{ player.matchesPlayed }}</span>
+            <span class="stat-value">{{ player.matchesPlayed ?? '-' }}</span>
         </div>
         
         <div class="stat-item">
             <span class="stat-label">Goals</span>
-            <span class="stat-value ">{{ player.goals }}</span>
+            <span class="stat-value ">{{ player.goals ?? '-' }}</span>
         </div>
         <div class="stat-item">
             <span class="stat-label">Assists</span>
-            <span class="stat-value">{{ player.assists }}</span>
+            <span class="stat-value">{{ player.assists ?? '-' }}</span>
         </div>
         <div class="stat-item">
             <span class="stat-label">Tackles</span>
-            <span class="stat-value">{{ player.tackles }}</span>
+            <span class="stat-value">{{ player.tackles ?? '-' }}</span>
         </div>
     </div>
+
+        <button
+            type="button"
+            class="view-profile"
+            [routerLink]="['/program/profile-details', player.id]"
+        >
+            View profile
+        </button>
 </div>

@@ -18,11 +18,6 @@
           <mat-icon class="icon">crop_rotate</mat-icon>
           <span class="nav-label">Squad planning</span>
         </li>
-         <li routerLink="/questions" routerLinkActive="active" (click)="requestClose()"
-        >
-          <mat-icon class="icon">dynamic_form</mat-icon>
-        <span class="nav-label">questions</span>
-        </li>
         <li routerLink="/program" routerLinkActive="active" (click)="requestClose()"
         [routerLinkActiveOptions]="{exact:true}">
          <mat-icon class="icon">search</mat-icon>
@@ -35,13 +30,21 @@
           <span class="nav-label">Short List</span>
         </li>
 
-
-        <li routerLink="/program/repots" routerLinkActive="active" (click)="requestClose()">
-          <mat-icon class="icon">assignment</mat-icon>
-          <span class="nav-label">Reports</span>
+        @if (showUserManagement) {
+        <li routerLink="/program/user-management" routerLinkActive="active" (click)="requestClose()">
+          <mat-icon class="icon">manage_accounts</mat-icon>
+          <span class="nav-label">User Management</span>
         </li>
+        }
       </ul>
     </nav>
+
+    <div class="sidebar-footer">
+      <button type="button" class="logout" (click)="logout()">
+        <mat-icon class="icon">logout</mat-icon>
+        <span class="nav-label">Logout</span>
+      </button>
+    </div>
 
 </div>
 

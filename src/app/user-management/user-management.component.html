@@ -1,0 +1,66 @@
+<section class="user-management">
+  <header>
+    <h2>User Management</h2>
+    <p>Manage Scout and Analyst accounts for your club.</p>
+  </header>
+
+  <div class="content">
+    <div class="panel">
+      <div class="panel-header">
+        <h3>Users</h3>
+        <span class="helper">IT accounts are hidden</span>
+      </div>
+
+      <div class="state" *ngIf="loading">Loading users...</div>
+      <div class="state error" *ngIf="!loading && error">{{ error }}</div>
+
+      <ul class="user-list" *ngIf="!loading && !error">
+        <li
+          *ngFor="let user of visibleUsers; trackBy: trackByUserId"
+          (click)="selectUser(user)"
+          [class.active]="selectedUser?.userId === user.userId"
+        >
+          <div>
+            <div class="email">{{ user.email }}</div>
+            <div class="role">{{ roleLabel(user.role) }}</div>
+          </div>
+          <span class="edit">Edit</span>
+        </li>
+      </ul>
+
+      <div class="state" *ngIf="!loading && !error && !visibleUsers.length">
+        No Scout or Analyst accounts found.
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Edit user</h3>
+
+      <div class="state" *ngIf="!selectedUser">
+        Select a user from the list to edit their email or password.
+      </div>
+
+      <form *ngIf="selectedUser" [formGroup]="form" class="editor">
+        <label class="field">
+          <span>Email</span>
+          <input type="email" formControlName="email" placeholder="email" />
+        </label>
+
+        <label class="field">
+          <span>New password</span>
+          <input type="password" formControlName="password" placeholder="Leave blank to keep" />
+        </label>
+        <p class="hint">Leave the password empty to keep the current one.</p>
+
+        <div class="actions">
+          <button type="button" class="primary" (click)="save()" [disabled]="saving">
+            Save changes
+          </button>
+        </div>
+
+        <p class="state error" *ngIf="saveError">{{ saveError }}</p>
+        <p class="state success" *ngIf="saveSuccess">{{ saveSuccess }}</p>
+      </form>
+    </div>
+  </div>
+</section>

@@ -253,6 +253,22 @@ ul {
     border-bottom: 1px solid #1a1f1c;
 }
 
+.img-about {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 0;
+}
+
+.img-about img {
+    width: min(100%, 520px);
+    height: auto;
+    max-width: 100%;
+    display: block;
+    object-fit: contain;
+}
+
 .platform-content {
     flex: 1;
 }

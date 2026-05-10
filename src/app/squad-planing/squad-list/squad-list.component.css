@@ -7,7 +7,7 @@
   border: 2px solid var(--main-green);
   border-radius: 20px;
   padding: 20px;
-  width: 90%;
+  width: min(100%, 980px);
   margin: 20px auto;
   color: white;
 }
@@ -83,4 +83,79 @@ button:disabled {
 
 button:disabled:hover {
   scale: 1;
+}
+
+@media (max-width: 900px) {
+  .squad-table-card {
+    padding: 16px;
+  }
+
+  .squad-header,
+  .squad-row {
+    padding: 8px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 700px) {
+  .squad-list-title {
+    font-size: 18px;
+  }
+
+  .player-image {
+    width: 28px;
+    height: 28px;
+  }
+
+  button {
+    padding: 4px 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .squad-table-card {
+    padding: 12px;
+  }
+
+  .squad-header {
+    display: none;
+  }
+
+  .squad-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 12px;
+    align-items: start;
+    padding: 12px;
+    border-bottom: 1px solid #2b2b2b;
+  }
+
+  .squad-row > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .squad-row > div::before {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #9aa0a6;
+    content: '';
+  }
+
+  .squad-row > div:nth-child(1)::before { content: 'Player'; }
+  .squad-row > div:nth-child(2)::before { content: 'Position'; }
+  .squad-row > div:nth-child(3)::before { content: 'Age'; }
+  .squad-row > div:nth-child(4)::before { content: 'Nationality'; }
+  .squad-row > div:nth-child(5)::before { content: 'Matches'; }
+  .squad-row > div:nth-child(6)::before { content: 'Change'; }
+
+  .player-cell {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .player-cell::before {
+    flex-basis: 100%;
+  }
 }

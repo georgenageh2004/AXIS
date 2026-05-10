@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIcon } from "@angular/material/icon";
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,10 +13,10 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  private router=inject(Router)
-  private readonly testEmail = 'test@gmail.com';
-  private readonly testPassword = 'test1234';
+  private router = inject(Router);
+  private authService = inject(AuthService);
   authError = '';
+  loading = false;
 form= new FormGroup({
   email:new  FormControl('',{
     validators:[Validators.email,Validators.required]
@@ -36,10 +38,6 @@ form= new FormGroup({
   this.form.controls.password.dirty&&
   this.form.controls.password.invalid
  }
- signup(){
-this.authError = '';
-this.router.navigate(['/signup'])
- }
 
 clearAuthError(): void {
   if (this.authError) {
@@ -57,12 +55,18 @@ onSubmit(){
   const emailValue = (this.form.value.email ?? '').trim().toLowerCase();
   const passValue = this.form.value.password ?? '';
 
-  if(emailValue === this.testEmail && passValue === this.testPassword){
-    this.authError = '';
-    this.router.navigate(['/program']);
-    return;
-  }
-
-  this.authError = 'Email or password is incorrect.';
+  this.loading = true;
+  this.authService
+    .login(emailValue, passValue)
+    .pipe(finalize(() => (this.loading = false)))
+    .subscribe({
+      next: () => {
+        this.authError = '';
+        this.router.navigate(['/program']);
+      },
+      error: () => {
+        this.authError = 'Invalid email or password.';
+      }
+    });
 }
 }

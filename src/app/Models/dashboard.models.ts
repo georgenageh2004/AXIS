@@ -5,6 +5,10 @@ export interface StatItem {
 }
 
 export interface DashboardResponse {
+  team?: {
+    id: number;
+    name: string;
+  };
   teamName?: string;
   attackingStats?: StatItem[];
   goalkeepingStats?: StatItem[];

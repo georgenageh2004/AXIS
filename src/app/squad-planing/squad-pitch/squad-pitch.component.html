@@ -1,31 +1,61 @@
 <div class="container">
-<div class="plan">
-  <div class="pitch" #pitchBoundary>
-    <img class="pitch-bg" src="assets/pitch1.png" alt="football pitch">
-  
-    <!-- Players rendered on top of the pitch -->
-  <div
-  class="player"
-  *ngFor="let p of pitchPlayers; let i = index"
-  cdkDrag
-  [cdkDragBoundary]="pitchBoundary"
-  [cdkDragFreeDragPosition]="getPlayerDragPosition(p.id)"
-  (cdkDragStarted)="onDragStart($event)"
-  (cdkDragEnded)="onDragEnd($event, p)"
-  (click)="onPlayerClick(p)"
-  [style.left]="'calc(' + (currentFormation[i]?.x ?? 0) + '% - 30.5px)'"
-  [style.top]="'calc(' + (currentFormation[i]?.y ?? 0) + '% - 29.5px)'"
->
-      <img class="player-img" [src]="p.image" [alt]="p.name">
-      <div class="underplayer">
-      <mat-icon class="change-btn" (click)="$event.stopPropagation(); changingPlayer = p">change_circle</mat-icon>
-      
-     <h2 class="player-name">{{ p.name }}</h2>
-       </div>
+<div class="status" *ngIf="isLoading">Loading squad...</div>
+<div class="status error" *ngIf="errorMessage">{{ errorMessage }}</div>
+<div class="formation-bar">
+  <label for="formationSelect">Formation</label>
+  <select
+    id="formationSelect"
+    [(ngModel)]="selectedFormation"
+    (ngModelChange)="onFormationChange($event)">
+    <option *ngFor="let formation of formationOptions" [value]="formation">
+      {{ formation }}
+    </option>
+  </select>
+  <button
+    type="button"
+    class="save-btn"
+    (click)="saveSquad()"
+    [disabled]="isSaving || isLoading || pitchPlayers.length === 0">
+    {{ isSaving ? 'Saving...' : 'Save' }}
+  </button>
+</div>
+<div class="status success" *ngIf="saveMessage">{{ saveMessage }}</div>
+<div class="status error" *ngIf="saveError">{{ saveError }}</div>
+<div class="plan-row">
+  <div class="plan">
+    <div class="pitch" #pitchBoundary>
+      <img class="pitch-bg" src="assets/pitch1.png" alt="football pitch">
+    
+      <!-- Players rendered on top of the pitch -->
+    <div
+    class="player"
+    *ngFor="let p of pitchPlayers; let i = index"
+    cdkDrag
+    [cdkDragBoundary]="pitchBoundary"
+    [cdkDragFreeDragPosition]="getPlayerDragPosition(p.id)"
+    (cdkDragStarted)="onDragStart($event)"
+    (cdkDragEnded)="onDragEnd($event, p)"
+    (click)="onPlayerClick(p)"
+    [style.left]="'calc(' + (currentFormation[i].x || 0) + '% - 30.5px)'"
+    [style.top]="'calc(' + (currentFormation[i].y || 0) + '% - 29.5px)'"
+  >
+        <img class="player-img" [src]="p.image" [alt]="p.name">
+        <div class="underplayer">
+        <mat-icon
+          class="change-btn"
+          [class.active]="changingPlayer?.id === p.id"
+          (click)="$event.stopPropagation(); changingPlayer = p"
+        >change_circle</mat-icon>
+        
+       <h2 class="player-name">{{ p.name }}</h2>
+         </div>
+      </div>
     </div>
   </div>
+  <div class="player-card" *ngIf="selectedPlayer">
+    <app-player-details [player]="selectedPlayer"></app-player-details>
+  </div>
 </div>
- <app-player-details [player]="selectedPlayer"></app-player-details>
 
 </div>
 <app-squad-list 
